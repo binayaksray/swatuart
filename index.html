@@ -1,158 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Handmade Art Store | Unique Crafts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- SEO -->
   <meta name="description" content="Handmade art and craft products. Unique, custom designs. Order directly on WhatsApp." />
   <meta name="keywords" content="handmade art, craft, wall decor, handmade gifts india" />
 
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
+    /* Earthy Boho Theme */
+    :root {
+      --bg-color: #F9F7F3;
+      --card-bg: #FFFFFF;
+      --primary-text: #3E3B38;
+      --secondary-text: #6B6661;
+      --accent-color: #6C826B; /* Sage Green */
+      --accent-hover: #5A6D59;
+      --price-color: #B56B45; /* Terracotta */
+      --border-radius: 16px;
+    }
+
     body { 
-      font-family: Arial; 
+      font-family: 'Nunito', sans-serif; 
       margin: 0; 
-      padding: 10px; 
-      background: #fafafa;
+      padding: 20px 15px; 
+      background: var(--bg-color);
+      color: var(--primary-text);
+      max-width: 800px;
+      margin: 0 auto;
     }
 
-    .logo {
-      display: block;
-      margin: 0 auto 10px;
-      max-width: 120px;
-    }
+    /* Header */
+    .header-section { text-align: center; margin-bottom: 30px; }
+    .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; }
+    h2 { font-family: 'Lora', serif; font-size: 28px; margin: 0 0 5px 0; color: var(--primary-text); }
+    .subtitle { color: var(--secondary-text); font-size: 15px; margin-top: 0; }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 12px; 
-    }
-
+    /* Grid & Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
     .card { 
-      border-radius: 10px; 
-      padding: 8px; 
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border-radius: var(--border-radius); 
+      padding: 12px; 
+      background: var(--card-bg);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
     }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+    img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+    
+    /* Card Typography */
+    h4 { font-family: 'Lora', serif; margin: 0 0 5px; font-size: 16px; }
+    .desc { font-size: 13px; color: var(--secondary-text); margin: 0 0 10px; flex-grow: 1; }
+    .price { font-weight: 700; font-size: 18px; color: var(--price-color); margin: 5px 0; }
+    .old-price { text-decoration: line-through; color: #AFAFAF; font-size: 13px; margin-left: 6px; font-weight: 400; }
+    .offer { color: var(--price-color); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0; }
+    .stock { color: var(--accent-color); font-size: 12px; font-weight: 600; margin: 2px 0; }
+    .viewing { font-size: 12px; color: #888; margin: 4px 0 12px; }
 
-    img { 
-      width: 100%; 
-      height: 140px;
-      object-fit: cover;
-      border-radius: 8px; 
-    }
-
-    .desc { font-size: 13px; color: #555; }
-
-    .price { font-weight: bold; font-size: 15px; }
-
-    .old-price {
-      text-decoration: line-through;
-      color: #999;
-      font-size: 13px;
-      margin-left: 5px;
-    }
-
-    .offer { color: red; font-size: 12px; font-weight: bold; }
-
-    .stock { color: green; font-size: 12px; }
-
-    .viewing { font-size: 12px; color: #888; }
-
+    /* Button */
     button { 
-      background: black; 
-      color: white; 
-      padding: 8px; 
-      border: none; 
-      border-radius: 6px; 
-      width: 100%;
-      margin-top: 5px;
-      cursor: pointer;
-      font-size: 13px;
+      background: var(--accent-color); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-size: 14px; font-weight: 600; font-family: 'Nunito', sans-serif; transition: background 0.2s; 
     }
+    button:hover { background: var(--accent-hover); }
+    .trust { font-size: 11px; color: #999; margin-top: 10px; line-height: 1.6; text-align: left; }
 
-    .trust {
-      font-size: 12px;
-      color: #666;
-      margin-top: 5px;
-    }
+    /* Sections & Boxes */
+    .section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #EBE6DE; }
+    .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 22px; color: var(--primary-text); margin-bottom: 20px; }
+    .box { background: var(--card-bg); padding: 16px; border-radius: var(--border-radius); margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
+    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); }
+    .review-img { height: 180px; }
 
-    .section {
-      margin-top: 30px;
-    }
-
-    .box {
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    }
-
-    .review-img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 6px;
-    }
-
-    .loading, .error {
-      text-align: center;
-      margin-top: 20px;
-      color: #666;
-    }
+    /* Loading/Error */
+    .loading, .error { text-align: center; margin-top: 40px; color: var(--secondary-text); font-style: italic; }
   </style>
 </head>
 
 <body>
 
-<img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" />
-
-<h2>Handmade Art Store</h2>
+<div class="header-section">
+  <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" alt="Store Logo" />
+  <h2>Handmade Art Store</h2>
+  <p class="subtitle">Crafted with passion, delivered with love.</p>
+</div>
 
 <div id="products" class="grid"></div>
-<div id="status" class="loading">Loading products...</div>
+<div id="status" class="loading">Gathering our beautiful products for you...</div>
 
-<!-- Reviews Section -->
 <div class="section">
-  <h3 style="text-align:center;">Customer Reviews</h3>
+  <h3>Happy Customers</h3>
   <div id="reviews"></div>
 </div>
 
-<!-- About -->
-<div class="section" style="text-align:center;">
-  <p><b>Handmade with ❤️</b></p>
-  <p>Created by [Her Name]</p>
-  <p>100+ happy customers</p>
-</div>
-
-<!-- FAQ -->
 <div class="section">
-  <h3 style="text-align:center;">FAQs</h3>
-
+  <h3>Frequently Asked Questions</h3>
   <div class="box">
-    <b>How to order?</b>
-    <p>Click on "Order on WhatsApp" and send message.</p>
+    <b>How do I place an order?</b>
+    <p>Simply click on the "Order on WhatsApp" button under the product you love and send us the pre-filled message.</p>
   </div>
-
   <div class="box">
     <b>Do you take custom orders?</b>
-    <p>Yes, message on WhatsApp.</p>
+    <p>Yes, we absolutely do! Send us a message on WhatsApp with your ideas.</p>
   </div>
-
   <div class="box">
-    <b>Do you teach this?</b>
-    <p>No, currently we only sell finished products.</p>
+    <b>Do you teach craft classes?</b>
+    <p>Not at the moment. Currently, we focus solely on selling finished, handcrafted pieces.</p>
   </div>
+</div>
+
+<div class="section" style="text-align:center; padding-bottom: 30px;">
+  <p style="font-family: 'Lora', serif; font-size: 18px;"><b>Handmade with ❤️</b></p>
+  <p style="color: var(--secondary-text);">Created by [Her Name]<br>Join 100+ happy customers</p>
 </div>
 
 <script>
+// [YOUR EXACT JAVASCRIPT CODE STAYS HERE]
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
 const container = document.getElementById("products");
@@ -188,7 +154,7 @@ fetch(API_URL)
         </p>
 
         <p class="offer">Limited Time Offer</p>
-        <p class="stock">Only ${stock} left</p>
+        <p class="stock">Only ${stock} left in stock</p>
         <p class="viewing">🔥 ${viewers} people viewed today</p>
 
         <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
@@ -196,7 +162,7 @@ fetch(API_URL)
         </button>
 
         <div class="trust">
-          ✔ Handmade<br>
+          ✔ 100% Handmade<br>
           ✔ Quality checked<br>
           ✔ Direct WhatsApp support
         </div>
@@ -204,16 +170,16 @@ fetch(API_URL)
 
       container.appendChild(card);
 
-      // REVIEW SECTION (separate)
+      // REVIEW SECTION
       if (p.review && p.reviewer) {
         const reviewCard = document.createElement("div");
         reviewCard.className = "box";
 
         reviewCard.innerHTML = `
           ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
-          ⭐⭐⭐⭐⭐
-          <p>"${p.review}"</p>
-          <small>- ${p.reviewer}</small>
+          <div style="color: #F5B041; font-size: 18px; margin-bottom: 5px;">★★★★★</div>
+          <p style="font-style: italic;">"${p.review}"</p>
+          <small style="display: block; margin-top: 10px; font-weight: bold;">- ${p.reviewer}</small>
         `;
 
         reviewContainer.appendChild(reviewCard);
@@ -221,7 +187,7 @@ fetch(API_URL)
     });
   })
   .catch(err => {
-    status.innerText = "Failed to load products.";
+    status.innerText = "Oops! Failed to load products. Please refresh.";
     status.className = "error";
   });
 </script>
