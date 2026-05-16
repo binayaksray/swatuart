@@ -17,11 +17,11 @@
   <style>
     /* Clean Gallery Theme */
     :root {
-      --bg-color: #FAFAFA; /* Soft, clean gallery white */
+      --bg-color: #FAFAFA;
       --card-bg: #FFFFFF;
       --primary-text: #222222;
       --secondary-text: #555555;
-      --accent-color: #4A6741; /* Deeper, more elegant green */
+      --accent-color: #4A6741; 
       --accent-hover: #3A5233;
       --price-color: #B56B45;
       --border-radius: 12px;
@@ -35,6 +35,7 @@
       color: var(--primary-text);
       max-width: 800px;
       margin: 0 auto;
+      overflow-x: hidden;
     }
 
     /* Top Announcement Bar */
@@ -51,12 +52,18 @@
       box-shadow: 0 2px 8px rgba(181, 107, 69, 0.3);
     }
 
-    .header-section { text-align: center; margin-bottom: 35px; }
+    .header-section { text-align: center; margin-bottom: 25px; }
     .logo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 15px; border: 3px solid white;}
     h2 { font-family: 'Lora', serif; font-size: 30px; margin: 0 0 5px 0; color: var(--primary-text); letter-spacing: 0.5px;}
     .subtitle { color: var(--secondary-text); font-size: 15px; margin-top: 0; }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+    /* Desktop Grid System (Default) */
+    .carousel-container { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      gap: 16px; 
+    }
+    
     .card { 
       border-radius: var(--border-radius); 
       padding: 12px; 
@@ -91,10 +98,7 @@
       overflow: hidden;
       white-space: pre-wrap;
     }
-    
-    .desc.expanded {
-      -webkit-line-clamp: unset; 
-    }
+    .desc.expanded { -webkit-line-clamp: unset; }
 
     .see-more {
       color: var(--accent-color);
@@ -120,6 +124,7 @@
 
     .section { margin-top: 40px; padding-top: 25px; border-top: 1px solid #EAEAEA; }
     .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 24px; color: var(--primary-text); margin-bottom: 25px; }
+    
     .box { background: var(--card-bg); padding: 20px; border-radius: var(--border-radius); margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #F0F0F0;}
     .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
     .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); line-height: 1.6; }
@@ -139,9 +144,44 @@
       font-size: 14px;
       background: #FFFFFF;
     }
-    .form-input:focus {
-      outline: none;
-      border-color: var(--accent-color);
+    .form-input:focus { outline: none; border-color: var(--accent-color); }
+
+    .swipe-hint { display: none; }
+
+    /* ========================================================
+       MOBILE CAROUSEL STYLES (Applies only to phones)
+       ======================================================== */
+    @media (max-width: 768px) {
+      .swipe-hint { 
+        display: block; 
+        text-align: right; 
+        font-size: 12px; 
+        color: #999; 
+        margin-bottom: 8px; 
+        font-style: italic; 
+      }
+
+      .carousel-container {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 15px; /* Space for shadow */
+        gap: 16px;
+        /* Hides scrollbar in Chrome/Safari for cleaner look */
+        -ms-overflow-style: none;  
+        scrollbar-width: none; 
+      }
+      .carousel-container::-webkit-scrollbar { 
+        display: none; 
+      }
+
+      /* Makes the cards peek out so users know to swipe */
+      .card, #reviews .box {
+        flex: 0 0 85%; 
+        scroll-snap-align: center;
+        margin-bottom: 0; /* Prevents awkward spacing inside carousel */
+      }
     }
   </style>
 </head>
@@ -160,12 +200,14 @@
   <p class="subtitle" style="margin-top:0; font-weight: 600; color: #4A6741;">💬 Quick WhatsApp support</p>
 </div>
 
-<div id="products" class="grid"></div>
+<div class="swipe-hint">👉 Swipe to explore</div>
+<div id="products" class="carousel-container"></div>
 <div id="status" class="loading">Gathering our beautiful products for you...</div>
 
-<div class="section">
+<div class="section" style="margin-top: 20px;">
   <h3>Happy Customers</h3>
-  <div id="reviews"></div>
+  <div class="swipe-hint">👉 Swipe to read</div>
+  <div id="reviews" class="carousel-container"></div>
 </div>
 
 <div class="section">
