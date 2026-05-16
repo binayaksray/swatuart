@@ -208,7 +208,7 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
 // ==========================================
-// 1. FETCH PRODUCTS & REVIEWS
+// 1. FETCH PRODUCTS & REVIEWS (SEPARATED)
 // ==========================================
 const container = document.getElementById("products");
 const reviewContainer = document.getElementById("reviews");
@@ -219,74 +219,58 @@ fetch(API_URL)
   .then(data => {
     status.style.display = "none";
 
-    data.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
+    // --- RENDER PRODUCTS ---
+    if(data.products && data.products.length > 0) {
+      data.products.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
 
-      const today = new Date().toISOString().slice(0, 10);
-      const key = `store_${p.id}_${today}`;
+        const today = new Date().toISOString().slice(0, 10);
+        const key = `store_${p.id}_${today}`;
+        let stored = localStorage.getItem(key);
 
-      let stored = localStorage.getItem(key);
+        if (!stored) {
+          stored = { stock: Math.floor(Math.random() * 5) + 1, viewers: Math.floor(Math.random() * 20) + 5 };
+          localStorage.setItem(key, JSON.stringify(stored));
+        } else {
+          stored = JSON.parse(stored);
+        }
 
-      if (!stored) {
-        stored = {
-          stock: Math.floor(Math.random() * 5) + 1,
-          viewers: Math.floor(Math.random() * 20) + 5
-        };
-        localStorage.setItem(key, JSON.stringify(stored));
-      } else {
-        stored = JSON.parse(stored);
-      }
+        const originalPrice = p.price * 2;
+        const msg = encodeURIComponent(`Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`);
 
-      const stock = stored.stock;
-      const viewers = stored.viewers;
-      const originalPrice = p.price * 2;
-
-      const msg = encodeURIComponent(
-        `Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`
-      );
-
-      card.innerHTML = `
-        <img src="${p.image}" alt="Handmade ${p.name}" />
-        <h4>${p.name}</h4>
-        <p class="desc">${p.description || ''}</p>
-
-        <p class="price">
-          ₹${p.price}
-          <span class="old-price">₹${originalPrice}</span>
-        </p>
-
-        <p class="offer">Limited Time Offer</p>
-        <p class="stock">Only ${stock} left in stock</p>
-        <p class="viewing">🔥 ${viewers} people viewed today</p>
-
-        <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
-          Order on WhatsApp
-        </button>
-
-        <div class="trust">
-          ✔ 100% Handmade<br>
-          ✔ Quality checked<br>
-          ✔ Trusted by customers
-        </div>
-      `;
-
-      container.appendChild(card);
-
-      if (p.review && p.reviewer) {
-        const reviewCard = document.createElement("div");
-        reviewCard.className = "box";
-
-        reviewCard.innerHTML = `
-          ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
-          <div style="color: #F5B041; font-size: 20px; margin-bottom: 5px;">★★★★★</div>
-          <p style="font-style: italic;">"${p.review}"</p>
-          <small style="display: block; margin-top: 10px; font-weight: bold; color: var(--primary-text);">- ${p.reviewer}</small>
+        card.innerHTML = `
+          <img src="${p.image}" alt="Handmade ${p.name}" />
+          <h4>${p.name}</h4>
+          <p class="desc">${p.description || ''}</p>
+          <p class="price">₹${p.price} <span class="old-price">₹${originalPrice}</span></p>
+          <p class="offer">Limited Time Offer</p>
+          <p class="stock">Only ${stored.stock} left in stock</p>
+          <p class="viewing">🔥 ${stored.viewers} people viewed today</p>
+          <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">Order on WhatsApp</button>
+          <div class="trust">✔ 100% Handmade<br>✔ Quality checked<br>✔ Trusted by customers</div>
         `;
+        container.appendChild(card);
+      });
+    }
 
-        reviewContainer.appendChild(reviewCard);
-      }
-    });
+    // --- RENDER REVIEWS ---
+    if(data.reviews && data.reviews.length > 0) {
+      data.reviews.forEach(r => {
+        if (r.review && r.reviewer) {
+          const reviewCard = document.createElement("div");
+          reviewCard.className = "box";
+
+          reviewCard.innerHTML = `
+            ${r.review_image ? `<img src="${r.review_image}" class="review-img" />` : ""}
+            <div style="color: #F5B041; font-size: 20px; margin-bottom: 5px;">★★★★★</div>
+            <p style="font-style: italic;">"${r.review}"</p>
+            <small style="display: block; margin-top: 10px; font-weight: bold; color: var(--primary-text);">- ${r.reviewer}</small>
+          `;
+          reviewContainer.appendChild(reviewCard);
+        }
+      });
+    }
   })
   .catch(err => {
     status.innerText = "Oops! Failed to load products. Please refresh.";
