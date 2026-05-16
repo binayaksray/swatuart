@@ -66,17 +66,33 @@
     .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 22px; color: var(--primary-text); margin-bottom: 20px; }
     .box { background: var(--card-bg); padding: 16px; border-radius: var(--border-radius); margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
     .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
-    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); }
+    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); line-height: 1.5; }
     .review-img { height: 180px; }
 
     .loading, .error { text-align: center; margin-top: 40px; color: var(--secondary-text); font-style: italic; }
+
+    /* Form Styles */
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
   </style>
 </head>
 
 <body>
 
 <div class="header-section">
-  <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" />
+  <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" alt="Store Logo" />
   <h2>Handmade Art Store</h2>
   <p class="subtitle">Crafted with passion, delivered with love.</p>
   <p class="subtitle" style="margin-bottom:2px;">🚚 Pan-India delivery</p>
@@ -91,40 +107,93 @@
   <div id="reviews"></div>
 </div>
 
-<!-- ONLY FAQ CHANGED -->
+<div class="section">
+  <h3>🎨 Learn to Create & Sell!</h3>
+  <div class="box" style="background-color: #F0F4F0; border: 1px dashed var(--accent-color);">
+    <b style="color: var(--accent-color);">Masterclass Course Coming Soon ✨</b>
+    <p style="margin-bottom: 15px;">Many of you asked: <i>"How do you make these? How do you get views on Reels? How do you sell your items?"</i></p>
+    <p style="margin-bottom: 20px;">I am launching a complete course covering Canvas Painting, Bottle Art, Lippan Art, Resin Art, Mirror Mosaic, and Mandala Art, PLUS the business secrets to growing your brand! <b>Join the waitlist to get early access.</b></p>
+    
+    <form id="waitlistForm">
+      <input type="text" id="wl-name" class="form-input" placeholder="Your Name" required>
+      <input type="tel" id="wl-phone" class="form-input" placeholder="Your WhatsApp Number" required>
+      <select id="wl-interest" class="form-input" required>
+        <option value="" disabled selected>What do you want to learn most?</option>
+        <option value="Lippan Art">Lippan Art</option>
+        <option value="Resin Art">Resin Art</option>
+        <option value="Canvas Painting">Canvas Painting</option>
+        <option value="Bottle Art">Bottle Art</option>
+        <option value="Mirror Mosaic">Mirror Mosaic</option>
+        <option value="Mandala Art">Mandala Art</option>
+        <option value="Business & Reels">Business, Sales & Reels Growth</option>
+        <option value="Everything">Everything!</option>
+      </select>
+      <button type="submit" id="wl-submit">Mark me as Interested</button>
+      <p id="wl-message" style="display:none; color: green; font-weight: bold; font-size: 13px; margin-top: 10px; text-align: center;"></p>
+    </form>
+  </div>
+</div>
+
 <div class="section">
   <h3>Frequently Asked Questions</h3>
-
-  <div class="box"><b>Are all artworks handmade?</b><p><b>Yes, 100% handmade 🤍</b></p></div>
-
-  <div class="box"><b>Can I customize size, color, or name?</b><p><b>Absolutely! ✨</b></p></div>
-
-  <div class="box"><b>How long for making & delivery?</b><p><b>7-10 days + 3-5 delivery 📦</b></p></div>
-
-  <div class="box"><b>What if damaged?</b><p><b>Free replacement with unboxing video 📦</b></p></div>
-
+  
   <div class="box">
-    <b>Do you teach how to make this?</b>
-    <p><b>Course coming soon 🎨</b><br>
-    Canvas, Bottle, Lippan, Resin, Mandala + Reels & Selling<br><br>
-    <b>Join waitlist 👇</b></p>
-
-    <button onclick="joinWaitlist()">Join Waitlist</button>
-
-    <p style="font-size:12px;color:#888;margin-top:8px;">
-      ⭐ 120+ people already joined
-    </p>
+    <b>1. Are all artworks handmade?</b>
+    <p><i>Yes, 100% handmade 🤍</i><br>Every piece is handcrafted with Lippan art, clay, and mirrors. No machine prints. Each artwork is one-of-a-kind.</p>
   </div>
 
+  <div class="box">
+    <b>2. Can I customize size, color, or name?</b>
+    <p><i>Absolutely! I love custom orders ✨</i><br>Choose size from 10" to 24", color theme, name, date, or quote. Add details in "Custom Note" while ordering. Price depends on size & design.</p>
+  </div>
+
+  <div class="box">
+    <b>3. How long for making & delivery?</b>
+    <p><i>Making: 7-10 working days + Delivery: 3-5 days 📦</i><br>All pieces are made fresh on order. Need it faster? Ask for "Express Making" with extra charges.</p>
+  </div>
+
+  <div class="box">
+    <b>4. What materials do you use? Is it durable?</b>
+    <p><i>Premium MDF, clay, real mirrors, acrylic colors + varnish.</i><br>With care, artworks last 10+ years. Avoid direct sunlight & water. Varnish protects from dust.</p>
+  </div>
+
+  <div class="box">
+    <b>5. What if my artwork is damaged?</b>
+    <p><i>100% Safe Packing Guarantee 📦</i><br>Packed with bubble wrap, thermocol & hard box. If damaged, send an <i>unboxing video</i> within 48 hours. Free replacement/refund, no questions.</p>
+  </div>
+
+  <div class="box">
+    <b>6. Do you ship across India? Shipping charges?</b>
+    <p><i>Yes, Pan-India shipping 🇮🇳</i><br>Charges: ₹150-250 based on weight/location. <i>FREE shipping</i> on orders above ₹5000.</p>
+  </div>
+
+  <div class="box">
+    <b>7. How do I clean the artwork?</b>
+    <p><i>Super easy ✨</i><br>Just dust with a dry soft cloth or brush. No water or chemicals. Varnish keeps colors safe.</p>
+  </div>
+
+  <div class="box">
+    <b>8. Do you take bulk orders?</b>
+    <p><i>Yes! For weddings, housewarming, gifts 🎁</i></p>
+  </div>
+
+  <div class="box">
+    <b>9. Still have questions?</b>
+    <p><i>Just DM me 💛</i></p>
+  </div>
 </div>
 
 <div class="section" style="text-align:center; padding-bottom: 30px;">
   <p style="font-family: 'Lora', serif; font-size: 18px;"><b>Handmade with ❤️</b></p>
+  <p style="color: var(--secondary-text);">Created by [Her Name]<br>Join 100+ happy customers</p>
 </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
+// ==========================================
+// 1. FETCH PRODUCTS & REVIEWS
+// ==========================================
 const container = document.getElementById("products");
 const reviewContainer = document.getElementById("reviews");
 const status = document.getElementById("status");
@@ -162,40 +231,104 @@ fetch(API_URL)
       );
 
       card.innerHTML = `
-        <img src="${p.image}" />
+        <img src="${p.image}" alt="Handmade ${p.name}" />
         <h4>${p.name}</h4>
         <p class="desc">${p.description || ''}</p>
-        <p class="price">₹${p.price} <span class="old-price">₹${originalPrice}</span></p>
+
+        <p class="price">
+          ₹${p.price}
+          <span class="old-price">₹${originalPrice}</span>
+        </p>
+
         <p class="offer">Limited Time Offer</p>
-        <p class="stock">Only ${stock} left</p>
-        <p class="viewing">🔥 ${viewers} viewing</p>
-        <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">Order</button>
-        <div class="trust">✔ Handmade<br>✔ Quality checked<br>✔ Trusted</div>
+        <p class="stock">Only ${stock} left in stock</p>
+        <p class="viewing">🔥 ${viewers} people viewed today</p>
+
+        <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
+          Order on WhatsApp
+        </button>
+
+        <div class="trust">
+          ✔ 100% Handmade<br>
+          ✔ Quality checked<br>
+          ✔ Trusted by customers
+        </div>
       `;
 
       container.appendChild(card);
+
+      if (p.review && p.reviewer) {
+        const reviewCard = document.createElement("div");
+        reviewCard.className = "box";
+
+        reviewCard.innerHTML = `
+          ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
+          <div style="color: #F5B041; font-size: 18px; margin-bottom: 5px;">★★★★★</div>
+          <p style="font-style: italic;">"${p.review}"</p>
+          <small style="display: block; margin-top: 10px; font-weight: bold;">- ${p.reviewer}</small>
+        `;
+
+        reviewContainer.appendChild(reviewCard);
+      }
     });
+  })
+  .catch(err => {
+    status.innerText = "Oops! Failed to load products. Please refresh.";
+    status.className = "error";
   });
 
-function joinWaitlist() {
-  const name = prompt("Enter your name:");
-  if (!name) return;
 
-  const phone = prompt("Enter your WhatsApp number:");
-  if (!phone) return;
-
+// ==========================================
+// 2. HANDLE WAITLIST FORM SUBMISSION
+// ==========================================
+document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent page reload
+  
+  const submitBtn = document.getElementById('wl-submit');
+  const messageEl = document.getElementById('wl-message');
+  
+  // Show loading state
+  submitBtn.innerText = "Saving your spot...";
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = "0.7";
+  
+  // Package the data
+  const payload = {
+    type: "waitlist",
+    name: document.getElementById('wl-name').value,
+    phone: document.getElementById('wl-phone').value,
+    interest: document.getElementById('wl-interest').value,
+    date: new Date().toLocaleString()
+  };
+  
+  // Send to Google Sheets App Script
   fetch(API_URL, {
     method: "POST",
-    body: JSON.stringify({
-      type: "waitlist",
-      name,
-      phone,
-      interest: "Art Course",
-      date: new Date().toLocaleString()
-    })
+    body: JSON.stringify(payload),
+    // Using text/plain prevents the browser from doing a CORS preflight options block
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8", 
+    }
   })
-  .then(() => alert("Added to waitlist 💛"));
-}
+  .then(res => res.text())
+  .then(text => {
+    // Success
+    messageEl.innerText = "🎉 Success! You are on the waitlist.";
+    messageEl.style.color = "green";
+    messageEl.style.display = "block";
+    submitBtn.innerText = "Joined Waitlist";
+    document.getElementById('waitlistForm').reset();
+  })
+  .catch(err => {
+    // Error
+    messageEl.innerText = "❌ Oops, something went wrong. Try again.";
+    messageEl.style.color = "red";
+    messageEl.style.display = "block";
+    submitBtn.innerText = "Mark me as Interested";
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+  });
+});
 </script>
 
 </body>
