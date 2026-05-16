@@ -6,7 +6,7 @@
   <meta name="description" content="Handmade art and craft products. Unique, custom designs. Order directly on WhatsApp." />
   <meta name="keywords" content="handmade art, craft, wall decor, handmade gifts india" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Nunito&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -15,171 +15,180 @@
       --primary-text: #3E3B38;
       --secondary-text: #6B6661;
       --accent-color: #6C826B;
-      --accent-hover: #5A6D59;
       --price-color: #B56B45;
-      --border-radius: 16px;
     }
 
-    body { 
-      font-family: 'Nunito', sans-serif; 
-      padding: 20px 15px; 
+    body {
+      font-family: 'Nunito', sans-serif;
+      padding: 20px 15px;
       background: var(--bg-color);
       color: var(--primary-text);
       max-width: 800px;
       margin: 0 auto;
     }
 
-    .header-section { text-align: center; margin-bottom: 20px; }
-    .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
-    h2 { font-family: 'Lora', serif; font-size: 28px; margin: 0; }
-    .subtitle { color: var(--secondary-text); font-size: 14px; }
+    .header-section { text-align: center; }
+    .logo { width: 100px; border-radius: 50%; margin-bottom: 10px; }
+    h2 { font-family: 'Lora', serif; }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
 
-    .card { 
-      border-radius: var(--border-radius); 
-      padding: 12px; 
-      background: var(--card-bg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    .card {
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
       position: relative;
     }
 
-    img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
-
-    h4 { font-family: 'Lora', serif; margin: 0 0 5px; font-size: 16px; }
-    .desc { font-size: 13px; color: var(--secondary-text); margin-bottom: 10px; }
-
-    .price { font-weight: 700; font-size: 18px; color: var(--price-color); }
-    .old-price { text-decoration: line-through; color: #aaa; font-size: 13px; margin-left: 6px; }
-
-    .offer { color: var(--price-color); font-size: 11px; font-weight: 700; }
-    .stock { color: var(--accent-color); font-size: 12px; }
-    .viewing { font-size: 12px; color: #888; margin-bottom: 10px; }
-
-    button { 
-      background: var(--accent-color); color: white; padding: 10px; border: none; border-radius: 8px; width: 100%; cursor: pointer;
+    img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
-    .trust { font-size: 11px; color: #999; margin-top: 8px; }
+    .price { font-weight: bold; color: var(--price-color); }
+    .old-price { text-decoration: line-through; color: #aaa; }
 
-    .section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-
-    .box { background: white; padding: 12px; border-radius: 12px; }
-
-    .review-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 6px; }
-
-    /* REVIEW CAROUSEL */
-    #reviews {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding-bottom: 10px;
+    button {
+      background: var(--accent-color);
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    #reviews .box {
+    .trust { font-size: 11px; color: #777; }
+
+    .section { margin-top: 30px; }
+
+    .box {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
       min-width: 220px;
     }
 
-    .loading, .error { text-align: center; margin-top: 20px; }
+    #reviews {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .review-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   </style>
 </head>
 
 <body>
 
 <div class="header-section">
-  <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" />
+  <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo">
   <h2>Handmade Art Store</h2>
-  <p class="subtitle">Crafted with passion, delivered with love.</p>
-  <p style="font-size:13px; color:#888;">🚚 Pan India delivery | 💬 Fast WhatsApp support</p>
+  <p>Crafted with passion, delivered with love.</p>
 </div>
 
 <div id="products" class="grid"></div>
-<div id="status" class="loading">Loading...</div>
 
 <div class="section">
-  <h3 style="text-align:center;">Happy Customers</h3>
+  <h3>Happy Customers</h3>
   <div id="reviews"></div>
+</div>
+
+<div class="section">
+  <h3>FAQ</h3>
+  <div class="box"><b>How to order?</b><p>Click WhatsApp button.</p></div>
+  <div class="box"><b>Custom orders?</b><p>Yes via WhatsApp.</p></div>
+  <div class="box"><b>Do you teach?</b><p>No, only selling products.</p></div>
+</div>
+
+<div class="section" style="text-align:center;">
+  <p><b>Handmade with ❤️</b></p>
+  <p>Created by [Her Name]</p>
 </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
-const container = document.getElementById("products");
-const reviewContainer = document.getElementById("reviews");
-const status = document.getElementById("status");
-
 fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById("products");
+  const reviewContainer = document.getElementById("reviews");
 
-    if (!data.length) {
-      status.innerText = "No products available right now.";
-      return;
+  data.forEach(p => {
+
+    const today = new Date().toISOString().slice(0,10);
+    const key = `store_${p.id}_${today}`;
+
+    let stored = localStorage.getItem(key);
+
+    if (!stored) {
+      stored = {
+        stock: Math.floor(Math.random()*5)+1,
+        viewers: Math.floor(Math.random()*20)+5
+      };
+      localStorage.setItem(key, JSON.stringify(stored));
+    } else {
+      stored = JSON.parse(stored);
     }
 
-    status.style.display = "none";
+    const msg = encodeURIComponent(
+      `Hi, I'm interested in:\n${p.name}\n₹${p.price}`
+    );
 
-    data.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
+    const card = document.createElement("div");
+    card.className = "card";
 
-      const originalPrice = p.price * 2;
-      const stock = Math.floor(Math.random() * 5) + 1;
-      const viewers = Math.floor(Math.random() * 20) + 5;
-      const isBestSeller = Math.random() > 0.7;
+    card.innerHTML = `
+      <img src="${p.image}" onclick="window.open('${p.image}')">
+      <h4>${p.name}</h4>
+      <p>${p.description || ""}</p>
 
-      const msg = encodeURIComponent(
-        `Hi, I'm interested in this product:\n\n${p.name}\nPrice: ₹${p.price}\n\nPlease share details.`
-      );
+      <p class="price">₹${p.price} <span class="old-price">₹${p.price*2}</span></p>
+      <p>Only ${stored.stock} left</p>
+      <p>🔥 ${stored.viewers} viewed today</p>
 
-      card.innerHTML = `
-        ${isBestSeller ? `<div style="position:absolute; background:#B56B45; color:white; font-size:10px; padding:4px 6px; border-radius:6px;">Best Seller</div>` : ""}
+      <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
+        Order
+      </button>
 
-        <img src="${p.image}" onclick="window.open('${p.image}', '_blank')" style="cursor:pointer;" />
+      <div class="trust">
+        ✔ Handmade by artist<br>
+        ✔ Quality checked<br>
+        ✔ WhatsApp support
+      </div>
+    `;
 
-        <h4>${p.name}</h4>
-        <p class="desc">${p.description || ''}</p>
+    container.appendChild(card);
 
-        <p class="price">
-          ₹${p.price}
-          <span class="old-price">₹${originalPrice}</span>
-        </p>
+    if (p.review) {
+      const r = document.createElement("div");
+      r.className = "box";
 
-        <p class="offer">Limited Time Offer</p>
-        <p class="stock">Only ${stock} left</p>
-        <p class="viewing">🔥 ${viewers} people viewing</p>
-
-        <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
-          Order on WhatsApp
-        </button>
-
-        <div class="trust">
-          ✔ Handmade by artist<br>
-          ✔ Quality checked<br>
-          ✔ Direct WhatsApp support
-        </div>
+      r.innerHTML = `
+        ${p.review_image ? `<img src="${p.review_image}" class="review-img">` : ""}
+        ⭐⭐⭐⭐⭐
+        <p>"${p.review}"</p>
+        <small>- ${p.reviewer}</small>
       `;
 
-      container.appendChild(card);
+      reviewContainer.appendChild(r);
+    }
 
-      if (p.review && p.reviewer) {
-        const reviewCard = document.createElement("div");
-        reviewCard.className = "box";
-
-        reviewCard.innerHTML = `
-          ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
-          ⭐⭐⭐⭐⭐
-          <p>"${p.review}"</p>
-          <small>- ${p.reviewer}</small>
-        `;
-
-        reviewContainer.appendChild(reviewCard);
-      }
-    });
-  })
-  .catch(() => {
-    status.innerText = "Failed to load products.";
   });
+});
 </script>
 
 </body>
