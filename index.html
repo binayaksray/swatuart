@@ -3,37 +3,103 @@
 <head>
   <title>Art Store</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    body { font-family: Arial; margin: 0; padding: 10px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 10px; }
-    img { width: 100%; border-radius: 10px; }
-    button { background: black; color: white; padding: 10px; border: none; border-radius: 6px; width: 100%; }
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      padding: 10px; 
+      background: #fafafa;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+      gap: 15px; 
+    }
+
+    .card { 
+      border-radius: 12px; 
+      padding: 10px; 
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    img { 
+      width: 100%; 
+      border-radius: 10px; 
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .price {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    button { 
+      background: black; 
+      color: white; 
+      padding: 10px; 
+      border: none; 
+      border-radius: 6px; 
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .loading, .error {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
   </style>
 </head>
+
 <body>
 
 <h2>Art Store</h2>
-<div class="grid" id="products"></div>
+
+<div id="products" class="grid"></div>
+<div id="status" class="loading">Loading products...</div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
+const container = document.getElementById("products");
+const status = document.getElementById("status");
+
 fetch(API_URL)
   .then(res => res.json())
   .then(data => {
-    const container = document.getElementById("products");
+    status.style.display = "none";
+
+    if (!data.length) {
+      status.innerText = "No products available.";
+      status.style.display = "block";
+      return;
+    }
 
     data.forEach(p => {
       const card = document.createElement("div");
       card.className = "card";
 
-      const msg = encodeURIComponent(`Hi, I want to order: ${p.name}`);
+      const msg = encodeURIComponent(
+        `Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`
+      );
 
       card.innerHTML = `
-        <img src="${p.image}" />
+        <img src="${p.image}" alt="${p.name}" />
         <h4>${p.name}</h4>
-        <p>₹${p.price}</p>
+        <p class="desc">${p.description || ''}</p>
+        <p class="price">₹${p.price}</p>
         <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
           Order on WhatsApp
         </button>
@@ -41,6 +107,11 @@ fetch(API_URL)
 
       container.appendChild(card);
     });
+  })
+  .catch(err => {
+    status.innerText = "Failed to load products. Try again later.";
+    status.className = "error";
+    console.error(err);
   });
 </script>
 
