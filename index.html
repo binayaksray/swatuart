@@ -17,11 +17,11 @@
   <style>
     /* Clean Gallery Theme */
     :root {
-      --bg-color: #FAFAFA;
+      --bg-color: #FAFAFA; /* Soft, clean gallery white */
       --card-bg: #FFFFFF;
       --primary-text: #222222;
       --secondary-text: #555555;
-      --accent-color: #4A6741; 
+      --accent-color: #4A6741; /* Deeper, more elegant green */
       --accent-hover: #3A5233;
       --price-color: #B56B45;
       --border-radius: 12px;
@@ -55,27 +55,23 @@
     }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
     
-    /* UPDATED: Taller image, clean text truncation */
+    /* UPDATED IMAGE STYLES - Perfect square, no cropping */
     img { 
       width: 100%; 
-      height: 240px; 
-      object-fit: cover; 
+      aspect-ratio: 1 / 1; 
+      object-fit: contain; 
+      background-color: #F4F4F4; /* Soft backdrop for the art */
       border-radius: 8px; 
-      margin-bottom: 15px; 
+      margin-bottom: 12px; 
     }
     
-    h4 { 
-      font-family: 'Lora', serif; 
-      margin: 0 0 8px; 
-      font-size: 18px; 
-      line-height: 1.3;
-    }
+    h4 { font-family: 'Lora', serif; margin: 0 0 8px; font-size: 18px; line-height: 1.3;}
     
+    /* UPDATED DESCRIPTION STYLES - See More Logic */
     .desc { 
       font-size: 13.5px; 
       color: var(--secondary-text); 
-      margin: 0 0 15px; 
-      flex-grow: 1; 
+      margin: 0; 
       line-height: 1.6;
       display: -webkit-box;
       -webkit-line-clamp: 3; 
@@ -83,7 +79,20 @@
       overflow: hidden;
       white-space: pre-wrap;
     }
-    /* END OF UPDATES */
+    
+    .desc.expanded {
+      -webkit-line-clamp: unset; /* Removes the limit when expanded */
+    }
+
+    .see-more {
+      color: var(--accent-color);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
 
     .price { font-weight: 700; font-size: 18px; color: var(--price-color); margin: 5px 0; }
     .old-price { text-decoration: line-through; color: #AFAFAF; font-size: 13px; margin-left: 6px; font-weight: 400; }
@@ -235,7 +244,7 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
 // ==========================================
-// 1. FETCH PRODUCTS & REVIEWS (SEPARATED)
+// 1. FETCH PRODUCTS & REVIEWS 
 // ==========================================
 const container = document.getElementById("products");
 const reviewContainer = document.getElementById("reviews");
@@ -266,10 +275,17 @@ fetch(API_URL)
         const originalPrice = p.price * 2;
         const msg = encodeURIComponent(`Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`);
 
+        // Decide whether to show the "See more" button based on text length
+        const descText = p.description || '';
+        const showSeeMore = descText.length > 80 ? `<div class="see-more" onclick="this.previousElementSibling.classList.toggle('expanded'); this.innerText = this.innerText === 'See more' ? 'See less' : 'See more';">See more</div>` : `<div style="margin-bottom: 12px;"></div>`;
+
         card.innerHTML = `
           <img src="${p.image}" alt="Handmade ${p.name}" />
           <h4>${p.name}</h4>
-          <p class="desc">${p.description || ''}</p>
+          
+          <div class="desc">${descText}</div>
+          ${showSeeMore}
+
           <p class="price">₹${p.price} <span class="old-price">₹${originalPrice}</span></p>
           <p class="offer">Limited Time Offer</p>
           <p class="stock">Only ${stored.stock} left in stock</p>
