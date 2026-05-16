@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Art Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; margin: 0; padding: 10px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 10px; }
+    img { width: 100%; border-radius: 10px; }
+    button { background: black; color: white; padding: 10px; border: none; border-radius: 6px; width: 100%; }
+  </style>
+</head>
+<body>
+
+<h2>Art Store</h2>
+<div class="grid" id="products"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
+
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("products");
+
+    data.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const msg = encodeURIComponent(`Hi, I want to order: ${p.name}`);
+
+      card.innerHTML = `
+        <img src="${p.image}" />
+        <h4>${p.name}</h4>
+        <p>₹${p.price}</p>
+        <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
+          Order on WhatsApp
+        </button>
+      `;
+
+      container.appendChild(card);
+    });
+  });
+</script>
+
+</body>
+</html>
