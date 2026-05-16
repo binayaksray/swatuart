@@ -1,3 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Handmade Art Store | Unique Crafts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO -->
+  <meta name="description" content="Handmade art and craft products. Unique, custom designs. Order directly on WhatsApp." />
+  <meta name="keywords" content="handmade art, craft, wall decor, handmade gifts india" />
+
+  <style>
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      padding: 10px; 
+      background: #fafafa;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 10px;
+      max-width: 120px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 12px; 
+    }
+
+    .card { 
+      border-radius: 10px; 
+      padding: 8px; 
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    img { 
+      width: 100%; 
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px; 
+    }
+
+    .desc { font-size: 13px; color: #555; }
+
+    .price { font-weight: bold; font-size: 15px; }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+
+    .offer { color: red; font-size: 12px; font-weight: bold; }
+
+    .stock { color: green; font-size: 12px; }
+
+    .viewing { font-size: 12px; color: #888; }
+
+    button { 
+      background: black; 
+      color: white; 
+      padding: 8px; 
+      border: none; 
+      border-radius: 6px; 
+      width: 100%;
+      margin-top: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .trust {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .box {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .review-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+
+    .loading, .error {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+
 <body>
 
 <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" />
@@ -64,7 +176,7 @@ fetch(API_URL)
         `Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`
       );
 
-      // PRODUCT CARD (no review inside)
+      // PRODUCT CARD
       card.innerHTML = `
         <img src="${p.image}" alt="Handmade ${p.name}" />
         <h4>${p.name}</h4>
@@ -98,7 +210,7 @@ fetch(API_URL)
         reviewCard.className = "box";
 
         reviewCard.innerHTML = `
-          ${p.review_image ? `<img src="${p.review_image}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:6px;" />` : ""}
+          ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
           ⭐⭐⭐⭐⭐
           <p>"${p.review}"</p>
           <small>- ${p.reviewer}</small>
@@ -115,3 +227,4 @@ fetch(API_URL)
 </script>
 
 </body>
+</html>
