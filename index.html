@@ -30,11 +30,25 @@
     body { 
       font-family: 'Nunito', sans-serif; 
       margin: 0; 
-      padding: 20px 15px; 
+      padding: 10px 15px 20px 15px; 
       background: var(--bg-color);
       color: var(--primary-text);
       max-width: 800px;
       margin: 0 auto;
+    }
+
+    /* Top Announcement Bar */
+    .announcement-bar {
+      background-color: var(--price-color);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(181, 107, 69, 0.3);
     }
 
     .header-section { text-align: center; margin-bottom: 35px; }
@@ -55,19 +69,17 @@
     }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
     
-    /* UPDATED IMAGE STYLES - Perfect square, no cropping */
     img { 
       width: 100%; 
       aspect-ratio: 1 / 1; 
       object-fit: contain; 
-      background-color: #F4F4F4; /* Soft backdrop for the art */
+      background-color: #F4F4F4; 
       border-radius: 8px; 
       margin-bottom: 12px; 
     }
     
     h4 { font-family: 'Lora', serif; margin: 0 0 8px; font-size: 18px; line-height: 1.3;}
     
-    /* UPDATED DESCRIPTION STYLES - See More Logic */
     .desc { 
       font-size: 13.5px; 
       color: var(--secondary-text); 
@@ -81,7 +93,7 @@
     }
     
     .desc.expanded {
-      -webkit-line-clamp: unset; /* Removes the limit when expanded */
+      -webkit-line-clamp: unset; 
     }
 
     .see-more {
@@ -136,11 +148,15 @@
 
 <body>
 
+<div class="announcement-bar">
+  🚚 FREE Pan-India Delivery on all orders!
+</div>
+
 <div class="header-section">
   <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" alt="Store Logo" />
   <h2>Swati Art Store</h2>
   <p class="subtitle">Crafted with passion, delivered with love.</p>
-  <p class="subtitle" style="margin-bottom:2px; font-weight: 600; color: #4A6741;">🚚 Pan-India delivery</p>
+  <p class="subtitle" style="margin-bottom:2px; font-weight: 600; color: #4A6741;">🚚 100% Free Pan-India Delivery</p>
   <p class="subtitle" style="margin-top:0; font-weight: 600; color: #4A6741;">💬 Quick WhatsApp support</p>
 </div>
 
@@ -216,7 +232,7 @@
 
   <div class="box">
     <b>6. Do you ship across India? Shipping charges?</b>
-    <p><i>Yes, Pan-India shipping 🇮🇳</i><br>Charges: ₹150-250 based on weight/location. <i>FREE shipping</i> on orders above ₹5000.</p>
+    <p><i>Yes, Free Pan-India shipping! 🇮🇳</i><br>We offer 100% free delivery anywhere in India! (For international orders outside India, standard shipping charges will apply based on location).</p>
   </div>
 
   <div class="box">
@@ -291,7 +307,7 @@ fetch(API_URL)
           <p class="stock">Only ${stored.stock} left in stock</p>
           <p class="viewing">🔥 ${stored.viewers} people viewed today</p>
           <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">Order on WhatsApp</button>
-          <div class="trust">✔ 100% Handmade<br>✔ Quality checked<br>✔ Trusted by customers</div>
+          <div class="trust">✔ 100% Handmade<br>✔ Free Pan-India Delivery<br>✔ Trusted by customers</div>
         `;
         container.appendChild(card);
       });
