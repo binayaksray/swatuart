@@ -4,6 +4,10 @@
   <title>Art Store</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- SEO -->
+  <meta name="description" content="Handmade art and craft products. Unique, custom designs. Order directly on WhatsApp." />
+  <meta name="keywords" content="handmade art, craft, wall decor, handmade gifts india" />
+
   <style>
     body { 
       font-family: Arial; 
@@ -43,15 +47,9 @@
       border-radius: 8px; 
     }
 
-    .desc {
-      font-size: 13px;
-      color: #555;
-    }
+    .desc { font-size: 13px; color: #555; }
 
-    .price {
-      font-weight: bold;
-      font-size: 15px;
-    }
+    .price { font-weight: bold; font-size: 15px; }
 
     .old-price {
       text-decoration: line-through;
@@ -60,16 +58,11 @@
       margin-left: 5px;
     }
 
-    .offer {
-      color: red;
-      font-size: 12px;
-      font-weight: bold;
-    }
+    .offer { color: red; font-size: 12px; font-weight: bold; }
 
-    .stock {
-      color: green;
-      font-size: 12px;
-    }
+    .stock { color: green; font-size: 12px; }
+
+    .viewing { font-size: 12px; color: #888; }
 
     button { 
       background: black; 
@@ -83,15 +76,32 @@
       font-size: 13px;
     }
 
-    .faq {
+    .trust {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .review-box {
+      background: #f9f9f9;
+      padding: 6px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    .review-img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
+
+    .section {
       margin-top: 30px;
     }
 
-    .faq h3 {
-      text-align: center;
-    }
-
-    .faq-item {
+    .box {
       background: white;
       padding: 10px;
       border-radius: 8px;
@@ -111,26 +121,36 @@
 
 <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" />
 
-<h2>Art Store</h2>
+<h2>Handmade Art Store</h2>
 
 <div id="products" class="grid"></div>
 <div id="status" class="loading">Loading products...</div>
 
-<!-- FAQ Section -->
-<div class="faq">
-  <h3>FAQs</h3>
+<!-- About -->
+<div class="section" style="text-align:center;">
+  <p><b>Handmade with ❤️</b></p>
+  <p>Created by [Her Name]</p>
+  <p>100+ happy customers</p>
+</div>
 
-  <div class="faq-item">
+<!-- FAQ -->
+<div class="section">
+  <h3 style="text-align:center;">FAQs</h3>
+
+  <div class="box">
     <b>How to order?</b>
     <p>Click on "Order on WhatsApp" and send message.</p>
   </div>
 
-  <div class="faq-item">
+  <div class="box">
     <b>Do you take custom orders?</b>
-    <p>Yes, you can message on WhatsApp.</p>
+    <p>Yes, message on WhatsApp.</p>
   </div>
 
-  <!-- You can add more later -->
+  <div class="box">
+    <b>Do you teach this?</b>
+    <p>No, currently we only sell finished products.</p>
+  </div>
 </div>
 
 <script>
@@ -149,13 +169,28 @@ fetch(API_URL)
       card.className = "card";
 
       const originalPrice = p.price * 2;
+      const stock = Math.floor(Math.random() * 5) + 1;
+      const viewers = Math.floor(Math.random() * 20) + 5;
 
       const msg = encodeURIComponent(
         `Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`
       );
 
+      let reviewHTML = "";
+
+      if (p.review && p.reviewer) {
+        reviewHTML = `
+          <div class="review-box">
+            ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
+            ⭐⭐⭐⭐⭐
+            <p style="font-size:12px;">"${p.review}"</p>
+            <small>- ${p.reviewer}</small>
+          </div>
+        `;
+      }
+
       card.innerHTML = `
-        <img src="${p.image}" />
+        <img src="${p.image}" alt="Handmade ${p.name}" />
         <h4>${p.name}</h4>
         <p class="desc">${p.description || ''}</p>
 
@@ -165,11 +200,20 @@ fetch(API_URL)
         </p>
 
         <p class="offer">Limited Time Offer</p>
-        <p class="stock">Only few pieces left</p>
+        <p class="stock">Only ${stock} left</p>
+        <p class="viewing">🔥 ${viewers} people viewed today</p>
+
+        ${reviewHTML}
 
         <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">
           Order on WhatsApp
         </button>
+
+        <div class="trust">
+          ✔ Handmade<br>
+          ✔ Quality checked<br>
+          ✔ Direct WhatsApp support
+        </div>
       `;
 
       container.appendChild(card);
