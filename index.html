@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Earthy Boho Theme */
     :root {
       --bg-color: #F9F7F3;
       --card-bg: #FFFFFF;
@@ -127,7 +126,6 @@ fetch(API_URL)
       const card = document.createElement("div");
       card.className = "card";
 
-      // ✅ DAILY STABLE RANDOM LOGIC
       const today = new Date().toISOString().slice(0, 10);
       const key = `store_${p.id}_${today}`;
 
@@ -173,7 +171,7 @@ fetch(API_URL)
         <div class="trust">
           ✔ 100% Handmade<br>
           ✔ Quality checked<br>
-          ✔ Direct WhatsApp support
+          ✔ Trusted by customers
         </div>
       `;
 
