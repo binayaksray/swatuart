@@ -6,74 +6,60 @@
   <meta name="description" content="Handmade art and craft products. Unique, custom designs. Order directly on WhatsApp." />
   <meta name="keywords" content="handmade art, craft, wall decor, handmade gifts india" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Earthy Boho Theme */
+    /* Modern Minimalist Theme */
     :root {
-      --bg-color: #F9F7F3;
-      --card-bg: #FFFFFF;
-      --primary-text: #3E3B38;
-      --secondary-text: #6B6661;
-      --accent-color: #6C826B; /* Sage Green */
-      --accent-hover: #5A6D59;
-      --price-color: #B56B45; /* Terracotta */
-      --border-radius: 16px;
+      --bg-color: #FFFFFF;
+      --card-bg: #F8F9FA;
+      --primary-text: #111111;
+      --secondary-text: #555555;
+      --accent-color: #25D366; /* Official WhatsApp Green */
+      --accent-hover: #128C7E;
+      --border-radius: 8px;
     }
 
-    body { 
-      font-family: 'Nunito', sans-serif; 
-      margin: 0; 
-      padding: 20px 15px; 
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0 auto;
+      padding: 20px;
       background: var(--bg-color);
       color: var(--primary-text);
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 900px;
     }
 
-    /* Header */
-    .header-section { text-align: center; margin-bottom: 30px; }
-    .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; }
-    h2 { font-family: 'Lora', serif; font-size: 28px; margin: 0 0 5px 0; color: var(--primary-text); }
-    .subtitle { color: var(--secondary-text); font-size: 15px; margin-top: 0; }
+    .header-section { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #EEEEEE; }
+    .logo { width: 80px; margin-bottom: 10px; border-radius: 8px;}
+    h2 { font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+    .subtitle { color: var(--secondary-text); font-weight: 300; }
 
-    /* Grid & Cards */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-    .card { 
-      border-radius: var(--border-radius); 
-      padding: 12px; 
-      background: var(--card-bg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; }
+    .card { background: var(--card-bg); border-radius: var(--border-radius); padding: 16px; transition: 0.3s; display: flex; flex-direction: column; }
+    .card:hover { background: #F0F2F5; }
+
+    img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 15px; }
+
+    h4 { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+    .desc { font-size: 14px; color: var(--secondary-text); margin: 0 0 15px; flex-grow: 1; line-height: 1.5; }
+    .price { font-weight: 700; font-size: 20px; margin: 5px 0; }
+    .old-price { text-decoration: line-through; color: #AAAAAA; font-size: 14px; font-weight: 300; }
+
+    .offer { color: #E74C3C; font-size: 12px; font-weight: 700; margin: 0; }
+    .stock { color: #27AE60; font-size: 12px; margin: 4px 0; }
+    .viewing { font-size: 12px; color: #888; margin-bottom: 15px; }
+
+    button {
+      background: var(--accent-color); color: white; padding: 14px; border: none; border-radius: 4px; width: 100%; cursor: pointer; font-size: 15px; font-weight: 700; transition: 0.2s;
     }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
-    img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
-    
-    /* Card Typography */
-    h4 { font-family: 'Lora', serif; margin: 0 0 5px; font-size: 16px; }
-    .desc { font-size: 13px; color: var(--secondary-text); margin: 0 0 10px; flex-grow: 1; }
-    .price { font-weight: 700; font-size: 18px; color: var(--price-color); margin: 5px 0; }
-    .old-price { text-decoration: line-through; color: #AFAFAF; font-size: 13px; margin-left: 6px; font-weight: 400; }
-    .offer { color: var(--price-color); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0; }
-    .stock { color: var(--accent-color); font-size: 12px; font-weight: 600; margin: 2px 0; }
-    .viewing { font-size: 12px; color: #888; margin: 4px 0 12px; }
+    button:hover { background: var(--accent-hover); box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
 
-    /* Button */
-    button { 
-      background: var(--accent-color); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-size: 14px; font-weight: 600; font-family: 'Nunito', sans-serif; transition: background 0.2s; 
-    }
-    button:hover { background: var(--accent-hover); }
-    .trust { font-size: 11px; color: #999; margin-top: 10px; line-height: 1.6; text-align: left; }
+    .trust { font-size: 12px; color: #777; margin-top: 15px; line-height: 1.8; border-top: 1px solid #E0E0E0; padding-top: 10px;}
 
-    /* Sections & Boxes */
-    .section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #EBE6DE; }
-    .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 22px; color: var(--primary-text); margin-bottom: 20px; }
-    .box { background: var(--card-bg); padding: 16px; border-radius: var(--border-radius); margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-    .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
-    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); }
-    .review-img { height: 180px; }
+    .section { margin-top: 60px; }
+    .section h3 { font-size: 20px; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid var(--primary-text); padding-left: 10px; margin-bottom: 25px;}
+    .box { border: 1px solid #EEEEEE; padding: 20px; border-radius: var(--border-radius); margin-bottom: 15px; }
+    .review-img { height: 200px; }
 
     /* Loading/Error */
     .loading, .error { text-align: center; margin-top: 40px; color: var(--secondary-text); font-style: italic; }
@@ -112,13 +98,12 @@
   </div>
 </div>
 
-<div class="section" style="text-align:center; padding-bottom: 30px;">
-  <p style="font-family: 'Lora', serif; font-size: 18px;"><b>Handmade with ❤️</b></p>
+<div class="section" style="text-align:center; padding-bottom: 30px; border-top: 1px solid #EEE; padding-top: 20px;">
+  <p style="font-weight: 700; font-size: 18px;">Handmade with ❤️</p>
   <p style="color: var(--secondary-text);">Created by [Her Name]<br>Join 100+ happy customers</p>
 </div>
 
 <script>
-// [YOUR EXACT JAVASCRIPT CODE STAYS HERE]
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
 const container = document.getElementById("products");
