@@ -110,7 +110,10 @@
 <div class="section">
   <h3>🎨 Learn to Create & Sell!</h3>
   <div class="box" style="background-color: #F0F4F0; border: 1px dashed var(--accent-color);">
-    <b style="color: var(--accent-color);">Masterclass Course Coming Soon ✨</b>
+    <div style="margin-bottom: 10px;">
+      <b style="color: var(--accent-color); display: inline-block; margin-bottom: 5px;">Masterclass Course Coming Soon ✨</b>
+      <span style="display: inline-block; background: #ffe4e1; color: #d0312d; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; vertical-align: top;">🔥 50+ already joined</span>
+    </div>
     <p style="margin-bottom: 15px;">Many of you asked: <i>"How do you make these? How do you get views on Reels? How do you sell your items?"</i></p>
     <p style="margin-bottom: 20px;">I am launching a complete course covering Canvas Painting, Bottle Art, Lippan Art, Resin Art, Mirror Mosaic, and Mandala Art, PLUS the business secrets to growing your brand! <b>Join the waitlist to get early access.</b></p>
     
@@ -282,17 +285,15 @@ fetch(API_URL)
 // 2. HANDLE WAITLIST FORM SUBMISSION
 // ==========================================
 document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // Prevent page reload
+  e.preventDefault(); 
   
   const submitBtn = document.getElementById('wl-submit');
   const messageEl = document.getElementById('wl-message');
   
-  // Show loading state
   submitBtn.innerText = "Saving your spot...";
   submitBtn.disabled = true;
   submitBtn.style.opacity = "0.7";
   
-  // Package the data
   const payload = {
     type: "waitlist",
     name: document.getElementById('wl-name').value,
@@ -301,18 +302,15 @@ document.getElementById('waitlistForm').addEventListener('submit', function(e) {
     date: new Date().toLocaleString()
   };
   
-  // Send to Google Sheets App Script
   fetch(API_URL, {
     method: "POST",
     body: JSON.stringify(payload),
-    // Using text/plain prevents the browser from doing a CORS preflight options block
     headers: {
       "Content-Type": "text/plain;charset=utf-8", 
     }
   })
   .then(res => res.text())
   .then(text => {
-    // Success
     messageEl.innerText = "🎉 Success! You are on the waitlist.";
     messageEl.style.color = "green";
     messageEl.style.display = "block";
@@ -320,7 +318,6 @@ document.getElementById('waitlistForm').addEventListener('submit', function(e) {
     document.getElementById('waitlistForm').reset();
   })
   .catch(err => {
-    // Error
     messageEl.innerText = "❌ Oops, something went wrong. Try again.";
     messageEl.style.color = "red";
     messageEl.style.display = "block";
