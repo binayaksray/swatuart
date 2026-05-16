@@ -15,37 +15,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* Clean Gallery Theme */
     :root {
-      --bg-color: #F9F7F3;
+      --bg-color: #FAFAFA; /* Soft, clean gallery white */
       --card-bg: #FFFFFF;
-      --primary-text: #3E3B38;
-      --secondary-text: #6B6661;
-      --accent-color: #6C826B;
-      --accent-hover: #5A6D59;
+      --primary-text: #222222;
+      --secondary-text: #555555;
+      --accent-color: #4A6741; /* Deeper, more elegant green */
+      --accent-hover: #3A5233;
       --price-color: #B56B45;
-      --border-radius: 16px;
+      --border-radius: 12px;
     }
 
     body { 
       font-family: 'Nunito', sans-serif; 
       margin: 0; 
       padding: 20px 15px; 
-      
-      /* --- NEW BEAUTIFUL BACKGROUND --- */
-      background-image: linear-gradient(rgba(249, 247, 243, 0.88), rgba(249, 247, 243, 0.88)), url('https://images.unsplash.com/photo-1526404423292-15db8c2334e5?q=80&w=2000&auto=format&fit=crop');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      /* -------------------------------- */
-      
+      background: var(--bg-color);
       color: var(--primary-text);
       max-width: 800px;
       margin: 0 auto;
     }
 
-    .header-section { text-align: center; margin-bottom: 30px; }
-    .logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; }
-    h2 { font-family: 'Lora', serif; font-size: 28px; margin: 0 0 5px 0; color: var(--primary-text); }
+    .header-section { text-align: center; margin-bottom: 35px; }
+    .logo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 15px; border: 3px solid white;}
+    h2 { font-family: 'Lora', serif; font-size: 30px; margin: 0 0 5px 0; color: var(--primary-text); letter-spacing: 0.5px;}
     .subtitle { color: var(--secondary-text); font-size: 15px; margin-top: 0; }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
@@ -53,19 +47,20 @@
       border-radius: var(--border-radius); 
       padding: 12px; 
       background: var(--card-bg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
+      border: 1px solid #F0F0F0;
     }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
-    img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+    img { width: 100%; height: 170px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
     
-    h4 { font-family: 'Lora', serif; margin: 0 0 5px; font-size: 16px; }
-    .desc { font-size: 13px; color: var(--secondary-text); margin: 0 0 10px; flex-grow: 1; }
+    h4 { font-family: 'Lora', serif; margin: 0 0 5px; font-size: 17px; }
+    .desc { font-size: 13px; color: var(--secondary-text); margin: 0 0 10px; flex-grow: 1; line-height: 1.4;}
     .price { font-weight: 700; font-size: 18px; color: var(--price-color); margin: 5px 0; }
     .old-price { text-decoration: line-through; color: #AFAFAF; font-size: 13px; margin-left: 6px; font-weight: 400; }
-    .offer { color: var(--price-color); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0; }
+    .offer { color: #D32F2F; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 2px 0; }
     .stock { color: var(--accent-color); font-size: 12px; font-weight: 600; margin: 2px 0; }
     .viewing { font-size: 12px; color: #888; margin: 4px 0 12px; }
 
@@ -75,12 +70,12 @@
     button:hover { background: var(--accent-hover); }
     .trust { font-size: 11px; color: #999; margin-top: 10px; line-height: 1.6; text-align: left; }
 
-    .section { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
-    .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 22px; color: var(--primary-text); margin-bottom: 20px; }
-    .box { background: rgba(255, 255, 255, 0.95); padding: 16px; border-radius: var(--border-radius); margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); backdrop-filter: blur(5px); }
+    .section { margin-top: 40px; padding-top: 25px; border-top: 1px solid #EAEAEA; }
+    .section h3 { font-family: 'Lora', serif; text-align: center; font-size: 24px; color: var(--primary-text); margin-bottom: 25px; }
+    .box { background: var(--card-bg); padding: 20px; border-radius: var(--border-radius); margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #F0F0F0;}
     .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
-    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); line-height: 1.5; }
-    .review-img { height: 180px; }
+    .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); line-height: 1.6; }
+    .review-img { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; margin-bottom: 12px;}
 
     .loading, .error { text-align: center; margin-top: 40px; color: var(--secondary-text); font-style: italic; }
 
@@ -94,7 +89,7 @@
       box-sizing: border-box;
       font-family: 'Nunito', sans-serif;
       font-size: 14px;
-      background: rgba(255, 255, 255, 0.9);
+      background: #FFFFFF;
     }
     .form-input:focus {
       outline: none;
@@ -109,8 +104,8 @@
   <img src="https://res.cloudinary.com/ddwzhpjom/image/upload/v1778927737/IMG-20260427-WA0009_qv526f.jpg" class="logo" alt="Store Logo" />
   <h2>Swati Art Store</h2>
   <p class="subtitle">Crafted with passion, delivered with love.</p>
-  <p class="subtitle" style="margin-bottom:2px;">🚚 Pan-India delivery</p>
-  <p class="subtitle" style="margin-top:0;">💬 Quick WhatsApp support</p>
+  <p class="subtitle" style="margin-bottom:2px; font-weight: 600; color: #4A6741;">🚚 Pan-India delivery</p>
+  <p class="subtitle" style="margin-top:0; font-weight: 600; color: #4A6741;">💬 Quick WhatsApp support</p>
 </div>
 
 <div id="products" class="grid"></div>
@@ -123,10 +118,10 @@
 
 <div class="section">
   <h3>🎨 Learn to Create & Sell!</h3>
-  <div class="box" style="background-color: rgba(240, 244, 240, 0.95); border: 1px dashed var(--accent-color);">
+  <div class="box" style="background-color: #F8FAF8; border: 1px dashed var(--accent-color);">
     <div style="margin-bottom: 10px;">
-      <b style="color: var(--accent-color); display: inline-block; margin-bottom: 5px;">Masterclass Course Coming Soon ✨</b>
-      <span style="display: inline-block; background: #ffe4e1; color: #d0312d; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; vertical-align: top;">🔥 50+ already joined</span>
+      <b style="color: var(--accent-color); display: inline-block; margin-bottom: 5px; font-size: 18px;">Masterclass Course Coming Soon ✨</b>
+      <span style="display: inline-block; background: #ffe4e1; color: #d0312d; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; vertical-align: middle; margin-left: 5px;">🔥 50+ already joined</span>
     </div>
     <p style="margin-bottom: 15px;">Many of you asked: <i>"How do you make these? How do you get views on Reels? How do you sell your items?"</i></p>
     <p style="margin-bottom: 15px;">I am launching a complete course covering Canvas Painting, Bottle Art, Lippan Art, Resin Art, Mirror Mosaic, and Mandala Art, PLUS the business secrets to growing your brand!</p>
@@ -149,8 +144,8 @@
         <option value="Business & Reels">Business, Sales & Reels Growth</option>
         <option value="Everything">Everything!</option>
       </select>
-      <button type="submit" id="wl-submit">Mark me as Interested</button>
-      <p id="wl-message" style="display:none; color: green; font-weight: bold; font-size: 13px; margin-top: 10px; text-align: center;"></p>
+      <button type="submit" id="wl-submit" style="font-size: 15px; padding: 14px;">Mark me as Interested</button>
+      <p id="wl-message" style="display:none; color: green; font-weight: bold; font-size: 14px; margin-top: 12px; text-align: center;"></p>
     </form>
   </div>
 </div>
@@ -204,7 +199,7 @@
   </div>
 </div>
 
-<div class="section" style="text-align:center; padding-bottom: 30px;">
+<div class="section" style="text-align:center; padding-bottom: 40px;">
   <p style="font-family: 'Lora', serif; font-size: 18px;"><b>Handmade with ❤️</b></p>
   <p style="color: var(--secondary-text);">Created by Swati<br>Join 100+ happy customers</p>
 </div>
@@ -284,9 +279,9 @@ fetch(API_URL)
 
         reviewCard.innerHTML = `
           ${p.review_image ? `<img src="${p.review_image}" class="review-img" />` : ""}
-          <div style="color: #F5B041; font-size: 18px; margin-bottom: 5px;">★★★★★</div>
+          <div style="color: #F5B041; font-size: 20px; margin-bottom: 5px;">★★★★★</div>
           <p style="font-style: italic;">"${p.review}"</p>
-          <small style="display: block; margin-top: 10px; font-weight: bold;">- ${p.reviewer}</small>
+          <small style="display: block; margin-top: 10px; font-weight: bold; color: var(--primary-text);">- ${p.reviewer}</small>
         `;
 
         reviewContainer.appendChild(reviewCard);
