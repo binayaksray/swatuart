@@ -128,6 +128,7 @@
     .box { background: var(--card-bg); padding: 20px; border-radius: var(--border-radius); margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border: 1px solid #F0F0F0;}
     .box b { font-family: 'Lora', serif; font-size: 16px; color: var(--primary-text); }
     .box p { margin: 8px 0 0; font-size: 14px; color: var(--secondary-text); line-height: 1.6; }
+    .review-stars { color: #F5B041; font-size: 20px; margin-bottom: 5px; }
     .review-img { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; margin-bottom: 12px;}
 
     .loading, .error { text-align: center; margin-top: 40px; color: var(--secondary-text); font-style: italic; }
@@ -148,40 +149,54 @@
 
     .swipe-hint { display: none; }
 
-    /* ========================================================
-       MOBILE CAROUSEL STYLES (Applies only to phones)
-       ======================================================== */
+    /* Category filters */
+    .category-heading { text-align: center; margin: 8px 0 12px; font-family: 'Lora', serif; font-size: 20px; }
+    .category-filters {
+      display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 12px;
+      margin: 0 0 12px; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+    }
+    .category-filter {
+      flex: 0 0 auto; width: auto; white-space: nowrap; padding: 9px 14px;
+      border: 1px solid #D9E0D5; border-radius: 999px; background: #fff;
+      color: var(--accent-color); font-size: 13px; font-weight: 700;
+    }
+    .category-filter:hover, .category-filter.active {
+      background: var(--accent-color); color: #fff; border-color: var(--accent-color);
+    }
+    .category-label {
+      display: inline-block; align-self: flex-start; margin: 0 0 9px;
+      padding: 4px 9px; border-radius: 999px; background: #EEF3EB;
+      color: var(--accent-color); font-size: 11px; font-weight: 700;
+    }
+    .empty-products { grid-column: 1 / -1; text-align: center; color: var(--secondary-text); padding: 28px 12px; }
+    .card img { display: block; }
+    .card button { margin-top: auto; }
+    .card .price { margin-top: 12px; }
+    .card .desc { white-space: pre-wrap; }
+    .card .see-more { user-select: none; }
+    .card .see-more[aria-expanded="true"] { margin-bottom: 12px; }
+    .order-unavailable { opacity: .55; cursor: not-allowed; }
+
+    /* Mobile: products stay in a two-column grid; reviews remain swipeable */
     @media (max-width: 768px) {
-      .swipe-hint { 
-        display: block; 
-        text-align: right; 
-        font-size: 12px; 
-        color: #999; 
-        margin-bottom: 8px; 
-        font-style: italic; 
-      }
-
-      .carousel-container {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 15px; /* Space for shadow */
-        gap: 16px;
-        /* Hides scrollbar in Chrome/Safari for cleaner look */
-        -ms-overflow-style: none;  
-        scrollbar-width: none; 
-      }
-      .carousel-container::-webkit-scrollbar { 
-        display: none; 
-      }
-
-      /* Makes the cards peek out so users know to swipe */
-      .card, #reviews .box {
-        flex: 0 0 85%; 
-        scroll-snap-align: center;
-        margin-bottom: 0; /* Prevents awkward spacing inside carousel */
-      }
+      body { padding-left: 12px; padding-right: 12px; }
+      .products-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .products-grid .card { min-width: 0; padding: 9px; }
+      .products-grid .card img { aspect-ratio: 1 / 1; object-fit: contain; }
+      .products-grid h4 { font-size: 15px; }
+      .products-grid .desc { font-size: 12px; line-height: 1.45; }
+      .products-grid .price { font-size: 16px; }
+      .products-grid button { padding: 10px 6px; font-size: 12px; }
+      .products-grid .trust { font-size: 10px; }
+      #reviews.carousel-container { display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 15px; gap: 16px; -ms-overflow-style: none; scrollbar-width: none; }
+      #reviews::-webkit-scrollbar { display: none; }
+      #reviews .box { flex: 0 0 85%; scroll-snap-align: center; margin-bottom: 0; }
+      .swipe-hint { display: block; text-align: right; font-size: 12px; color: #999; margin-bottom: 8px; font-style: italic; }
+    }
+    @media (max-width: 360px) {
+      .products-grid { gap: 8px; }
+      .products-grid .card { padding: 7px; }
+      .products-grid h4 { font-size: 14px; }
     }
   </style>
 </head>
@@ -200,8 +215,9 @@
   <p class="subtitle" style="margin-top:0; font-weight: 600; color: #4A6741;">💬 Quick WhatsApp support</p>
 </div>
 
-<div class="swipe-hint">👉 Swipe to explore</div>
-<div id="products" class="carousel-container"></div>
+<h3 class="category-heading">Explore Our Artworks</h3>
+<div id="categoryFilters" class="category-filters" aria-label="Filter artworks by art form"></div>
+<div id="products" class="carousel-container products-grid"></div>
 <div id="status" class="loading">Gathering our beautiful products for you...</div>
 
 <div class="section" style="margin-top: 20px;">
@@ -301,127 +317,211 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
-// ==========================================
-// 1. FETCH PRODUCTS & REVIEWS 
-// ==========================================
-const container = document.getElementById("products");
+// The category names here should match the values entered in Sheet1 column G.
+const ART_CATEGORIES = [
+  "Pattachitra",
+  "Warli Art",
+  "Lippan Art",
+  "Mural Art",
+  "Kalamkari Art",
+  "Pichwai Art",
+  "Gond Painting",
+  "Madhubani Painting",
+  "Bottle Art"
+];
+
+const productsContainer = document.getElementById("products");
+const filtersContainer = document.getElementById("categoryFilters");
 const reviewContainer = document.getElementById("reviews");
 const status = document.getElementById("status");
+let allProducts = [];
+let selectedCategory = "Featured";
 
+function normaliseCategory(value) {
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function makeElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined && text !== null) element.textContent = String(text);
+  return element;
+}
+
+function renderCategoryFilters() {
+  filtersContainer.replaceChildren();
+  ["Featured", ...ART_CATEGORIES].forEach(category => {
+    const button = makeElement("button", "category-filter", category);
+    button.type = "button";
+    button.classList.toggle("active", selectedCategory === category);
+    button.setAttribute("aria-pressed", selectedCategory === category ? "true" : "false");
+    button.addEventListener("click", () => {
+      selectedCategory = category;
+      renderCategoryFilters();
+      renderProducts();
+    });
+    filtersContainer.appendChild(button);
+  });
+}
+
+function addSeeMore(descriptionElement, text) {
+  if (text.length <= 150) return;
+  const toggle = makeElement("button", "see-more", "See more");
+  toggle.type = "button";
+  toggle.style.cssText = "width:auto;background:none;color:var(--accent-color);padding:4px 0;text-align:left;";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.addEventListener("click", () => {
+    const expanded = descriptionElement.classList.toggle("expanded");
+    descriptionElement.style.display = expanded ? "block" : "-webkit-box";
+    toggle.textContent = expanded ? "See less" : "See more";
+    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+  });
+  descriptionElement.after(toggle);
+}
+
+function getWhatsAppNumber(value) {
+  let number = String(value || "").replace(/\D/g, "");
+  // If the sheet contains a normal 10-digit Indian mobile number, add India's country code.
+  if (number.length === 10) number = "91" + number;
+  return number;
+}
+
+function renderProducts() {
+  productsContainer.replaceChildren();
+  const visibleProducts = selectedCategory === "Featured"
+    ? allProducts
+    : allProducts.filter(product => normaliseCategory(product.category) === normaliseCategory(selectedCategory));
+
+  if (!visibleProducts.length) {
+    productsContainer.appendChild(makeElement("p", "empty-products", "No artworks in this category yet. Please check back soon."));
+    return;
+  }
+
+  visibleProducts.forEach(product => {
+    const card = makeElement("article", "card");
+    const category = String(product.category || "Other Art").trim();
+    const image = makeElement("img");
+    image.src = String(product.image || "").trim();
+    image.alt = "Handmade " + String(product.name || "artwork");
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.onerror = () => { image.style.display = "none"; };
+    card.appendChild(image);
+
+    card.appendChild(makeElement("span", "category-label", category));
+    card.appendChild(makeElement("h4", "", product.name || "Handmade Artwork"));
+
+    const descriptionText = String(product.description || "").trim();
+    const description = makeElement("div", "desc", descriptionText);
+    card.appendChild(description);
+    addSeeMore(description, descriptionText);
+
+    const price = makeElement("p", "price", "₹" + Number(product.price || 0).toLocaleString("en-IN"));
+    card.appendChild(price);
+
+    const orderButton = makeElement("button", "", "Order on WhatsApp");
+    const whatsappNumber = getWhatsAppNumber(product.whatsapp);
+    if (whatsappNumber) {
+      orderButton.type = "button";
+      orderButton.addEventListener("click", () => {
+        const message = encodeURIComponent(
+          "Hi, I want to order:\n" + (product.name || "Handmade artwork") +
+          "\nCategory: " + category + "\nPrice: ₹" + product.price
+        );
+        window.open("https://wa.me/" + whatsappNumber + "?text=" + message, "_blank", "noopener,noreferrer");
+      });
+    } else {
+      orderButton.disabled = true;
+      orderButton.classList.add("order-unavailable");
+      orderButton.textContent = "WhatsApp number unavailable";
+    }
+    card.appendChild(orderButton);
+
+    card.appendChild(makeElement("div", "trust", "✔ 100% Handmade\n✔ Free Pan-India Delivery\n✔ WhatsApp ordering"));
+    productsContainer.appendChild(card);
+  });
+}
+
+function renderReviews(reviews) {
+  reviewContainer.replaceChildren();
+  (reviews || []).forEach(review => {
+    if (!review.review || !review.reviewer) return;
+    const reviewCard = makeElement("div", "box");
+    if (review.review_image) {
+      const image = makeElement("img", "review-img");
+      image.src = String(review.review_image);
+      image.alt = "Customer review photo";
+      image.loading = "lazy";
+      reviewCard.appendChild(image);
+    }
+    reviewCard.appendChild(makeElement("div", "review-stars", "★★★★★"));
+    const quote = makeElement("p", "", '“' + review.review + '”');
+    quote.style.fontStyle = "italic";
+    reviewCard.appendChild(quote);
+    const reviewer = makeElement("small", "", "- " + review.reviewer);
+    reviewer.style.cssText = "display:block;margin-top:10px;font-weight:bold;color:var(--primary-text);";
+    reviewCard.appendChild(reviewer);
+    reviewContainer.appendChild(reviewCard);
+  });
+}
+
+// Load products and reviews from the SAME existing Apps Script URL.
 fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
-    status.style.display = "none";
-
-    // --- RENDER PRODUCTS ---
-    if(data.products && data.products.length > 0) {
-      data.products.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        const today = new Date().toISOString().slice(0, 10);
-        const key = `store_${p.id}_${today}`;
-        let stored = localStorage.getItem(key);
-
-        if (!stored) {
-          stored = { stock: Math.floor(Math.random() * 5) + 1, viewers: Math.floor(Math.random() * 20) + 5 };
-          localStorage.setItem(key, JSON.stringify(stored));
-        } else {
-          stored = JSON.parse(stored);
-        }
-
-        const originalPrice = p.price * 2;
-        const msg = encodeURIComponent(`Hi, I want to order:\n${p.name}\nPrice: ₹${p.price}`);
-
-        // Decide whether to show the "See more" button based on text length
-        const descText = p.description || '';
-        const showSeeMore = descText.length > 80 ? `<div class="see-more" onclick="this.previousElementSibling.classList.toggle('expanded'); this.innerText = this.innerText === 'See more' ? 'See less' : 'See more';">See more</div>` : `<div style="margin-bottom: 12px;"></div>`;
-
-        card.innerHTML = `
-          <img src="${p.image}" alt="Handmade ${p.name}" />
-          <h4>${p.name}</h4>
-          
-          <div class="desc">${descText}</div>
-          ${showSeeMore}
-
-          <p class="price">₹${p.price} <span class="old-price">₹${originalPrice}</span></p>
-          <p class="offer">Limited Time Offer</p>
-          <p class="stock">Only ${stored.stock} left in stock</p>
-          <p class="viewing">🔥 ${stored.viewers} people viewed today</p>
-          <button onclick="window.open('https://wa.me/${p.whatsapp}?text=${msg}')">Order on WhatsApp</button>
-          <div class="trust">✔ 100% Handmade<br>✔ Free Pan-India Delivery<br>✔ Trusted by customers</div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // --- RENDER REVIEWS ---
-    if(data.reviews && data.reviews.length > 0) {
-      data.reviews.forEach(r => {
-        if (r.review && r.reviewer) {
-          const reviewCard = document.createElement("div");
-          reviewCard.className = "box";
-
-          reviewCard.innerHTML = `
-            ${r.review_image ? `<img src="${r.review_image}" class="review-img" />` : ""}
-            <div style="color: #F5B041; font-size: 20px; margin-bottom: 5px;">★★★★★</div>
-            <p style="font-style: italic;">"${r.review}"</p>
-            <small style="display: block; margin-top: 10px; font-weight: bold; color: var(--primary-text);">- ${r.reviewer}</small>
-          `;
-          reviewContainer.appendChild(reviewCard);
-        }
-      });
-    }
+  .then(response => {
+    if (!response.ok) throw new Error("Could not contact the product sheet.");
+    return response.json();
   })
-  .catch(err => {
-    status.innerText = "Oops! Failed to load products. Please refresh.";
+  .then(data => {
+    allProducts = (data.products || []).filter(product => product && product.name);
+    renderCategoryFilters();
+    renderProducts();
+    renderReviews(data.reviews || []);
+    status.style.display = "none";
+  })
+  .catch(error => {
+    console.error("Website data loading error:", error);
+    status.textContent = "Oops! We could not load the artworks. Please refresh the page.";
     status.className = "error";
   });
 
+// Existing waitlist form: same payload, same API endpoint, same waitlist sheet.
+document.getElementById("waitlistForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const submitButton = document.getElementById("wl-submit");
+  const messageElement = document.getElementById("wl-message");
+  submitButton.textContent = "Saving your spot...";
+  submitButton.disabled = true;
+  submitButton.style.opacity = "0.7";
 
-// ==========================================
-// 2. HANDLE WAITLIST FORM SUBMISSION
-// ==========================================
-document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-  e.preventDefault(); 
-  
-  const submitBtn = document.getElementById('wl-submit');
-  const messageEl = document.getElementById('wl-message');
-  
-  submitBtn.innerText = "Saving your spot...";
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = "0.7";
-  
   const payload = {
     type: "waitlist",
-    name: document.getElementById('wl-name').value,
-    phone: document.getElementById('wl-phone').value,
-    interest: document.getElementById('wl-interest').value,
+    name: document.getElementById("wl-name").value.trim(),
+    phone: document.getElementById("wl-phone").value.trim(),
+    interest: document.getElementById("wl-interest").value,
     date: new Date().toLocaleString()
   };
-  
+
   fetch(API_URL, {
     method: "POST",
     body: JSON.stringify(payload),
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8", 
-    }
+    headers: { "Content-Type": "text/plain;charset=utf-8" }
   })
-  .then(res => res.text())
-  .then(text => {
-    messageEl.innerText = "🎉 Success! You are on the waitlist.";
-    messageEl.style.color = "green";
-    messageEl.style.display = "block";
-    submitBtn.innerText = "Joined Waitlist";
-    document.getElementById('waitlistForm').reset();
+  .then(response => response.text())
+  .then(() => {
+    messageElement.textContent = "🎉 Success! You are on the waitlist.";
+    messageElement.style.color = "green";
+    messageElement.style.display = "block";
+    submitButton.textContent = "Joined Waitlist";
+    document.getElementById("waitlistForm").reset();
   })
-  .catch(err => {
-    messageEl.innerText = "❌ Oops, something went wrong. Try again.";
-    messageEl.style.color = "red";
-    messageEl.style.display = "block";
-    submitBtn.innerText = "Mark me as Interested";
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = "1";
+  .catch(error => {
+    console.error("Waitlist submission error:", error);
+    messageElement.textContent = "❌ Oops, something went wrong. Please try again.";
+    messageElement.style.color = "red";
+    messageElement.style.display = "block";
+    submitButton.textContent = "Mark me as Interested";
+    submitButton.disabled = false;
+    submitButton.style.opacity = "1";
   });
 });
 </script>
