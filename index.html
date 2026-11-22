@@ -416,8 +416,38 @@ function renderProducts() {
     card.appendChild(description);
     addSeeMore(description, descriptionText);
 
-    const price = makeElement("p", "price", "₹" + Number(product.price || 0).toLocaleString("en-IN"));
+    // Keep the original promotional display: doubled crossed-out price,
+    // limited-time offer, and daily randomized stock/viewer figures.
+    const numericPrice = Number(product.price || 0);
+    const price = makeElement("p", "price");
+    price.appendChild(document.createTextNode("₹" + numericPrice.toLocaleString("en-IN")));
+    const oldPrice = makeElement("span", "old-price", "₹" + (numericPrice * 2).toLocaleString("en-IN"));
+    price.appendChild(oldPrice);
     card.appendChild(price);
+
+    card.appendChild(makeElement("p", "offer", "Limited Time Offer"));
+
+    const today = new Date().toISOString().slice(0, 10);
+    const stockKey = `store_${product.id}_${today}`;
+    let promotionalCounts;
+    try {
+      promotionalCounts = JSON.parse(localStorage.getItem(stockKey));
+    } catch (error) {
+      promotionalCounts = null;
+    }
+    if (!promotionalCounts || typeof promotionalCounts.stock !== "number" || typeof promotionalCounts.viewers !== "number") {
+      promotionalCounts = {
+        stock: Math.floor(Math.random() * 5) + 1,
+        viewers: Math.floor(Math.random() * 20) + 5
+      };
+      try {
+        localStorage.setItem(stockKey, JSON.stringify(promotionalCounts));
+      } catch (error) {
+        // The display still works if browser storage is unavailable.
+      }
+    }
+    card.appendChild(makeElement("p", "stock", "Only " + promotionalCounts.stock + " left in stock"));
+    card.appendChild(makeElement("p", "viewing", "🔥 " + promotionalCounts.viewers + " people viewed today"));
 
     const orderButton = makeElement("button", "", "Order on WhatsApp");
     const whatsappNumber = getWhatsAppNumber(product.whatsapp);
