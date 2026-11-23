@@ -222,6 +222,28 @@
 
 
     /* Mobile: products stay in a two-column grid; reviews remain swipeable */
+
+    /* Click-to-enlarge image lightbox */
+    .card img, .review-img { cursor: zoom-in; }
+    .image-lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0, 0, 0, .88); align-items: center; justify-content: center;
+      padding: 24px; box-sizing: border-box;
+    }
+    .image-lightbox.open { display: flex; }
+    .image-lightbox img {
+      max-width: min(92vw, 1100px); max-height: 88vh; width: auto; height: auto;
+      object-fit: contain; border-radius: 10px; margin: 0;
+      background: transparent; cursor: zoom-out;
+    }
+    .image-lightbox-close {
+      position: absolute; top: 14px; right: 18px; width: 44px; height: 44px;
+      border-radius: 50%; padding: 0; font-size: 28px; line-height: 1;
+      background: rgba(255,255,255,.18); color: #fff;
+    }
+    .image-lightbox-close:hover { background: rgba(255,255,255,.3); }
+    body.lightbox-open { overflow: hidden; }
+
     @media (max-width: 768px) {
       body { padding-left: 12px; padding-right: 12px; }
       .products-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -406,6 +428,11 @@
   <p style="color: var(--secondary-text);">Created by Swati<br>Join 100+ happy customers</p>
 </div>
 
+<div id="imageLightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged artwork image">
+  <button type="button" class="image-lightbox-close" id="imageLightboxClose" aria-label="Close enlarged image">×</button>
+  <img id="imageLightboxImage" src="" alt="">
+</div>
+
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbz41PyY-9CZRFv7rQ9NJsPd78dO0WCi7h6QXlbPSkmFwTXm9kp5jZpx3TWgiZDQ13pp/exec";
 
@@ -441,6 +468,37 @@ function makeElement(tag, className, text) {
   if (text !== undefined && text !== null) element.textContent = String(text);
   return element;
 }
+
+// Open artwork and review images in a full-screen lightbox.
+const imageLightbox = document.getElementById("imageLightbox");
+const imageLightboxImage = document.getElementById("imageLightboxImage");
+
+function openImageLightbox(image) {
+  if (!image || !image.src) return;
+  imageLightboxImage.src = image.src;
+  imageLightboxImage.alt = image.alt || "Enlarged artwork";
+  imageLightbox.classList.add("open");
+  document.body.classList.add("lightbox-open");
+  document.getElementById("imageLightboxClose").focus();
+}
+
+function closeImageLightbox() {
+  imageLightbox.classList.remove("open");
+  document.body.classList.remove("lightbox-open");
+  imageLightboxImage.src = "";
+}
+
+document.getElementById("imageLightboxClose").addEventListener("click", closeImageLightbox);
+imageLightbox.addEventListener("click", event => {
+  if (event.target === imageLightbox || event.target === imageLightboxImage) {
+    closeImageLightbox();
+  }
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && imageLightbox.classList.contains("open")) {
+    closeImageLightbox();
+  }
+});
 
 function renderCategoryFilters() {
   filtersContainer.replaceChildren();
@@ -515,6 +573,7 @@ function renderProducts() {
     image.alt = "Handmade " + String(product.name || "artwork");
     image.loading = "lazy";
     image.decoding = "async";
+    image.addEventListener("click", () => openImageLightbox(image));
     image.onerror = () => { image.style.display = "none"; };
     card.appendChild(image);
 
@@ -601,6 +660,8 @@ function renderReviews(reviews) {
       image.src = String(review.review_image);
       image.alt = "Customer review photo";
       image.loading = "lazy";
+      image.style.cursor = "zoom-in";
+      image.addEventListener("click", () => openImageLightbox(image));
       reviewCard.appendChild(image);
     }
     reviewCard.appendChild(makeElement("div", "review-stars", "★★★★★"));
