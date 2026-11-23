@@ -187,6 +187,30 @@
     .card .see-more { user-select: none; }
     .card .see-more[aria-expanded="true"] { margin-bottom: 12px; }
     .order-unavailable { opacity: .55; cursor: not-allowed; }
+    .custom-banner { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:18px 0 22px; padding:18px; border-radius:12px; background:#F3F6F0; border:1px solid #D9E3D3; }
+    .custom-banner p { margin:5px 0 0; color:var(--secondary-text); font-size:14px; line-height:1.5; }
+    .custom-banner strong { font-family:'Lora',serif; font-size:18px; }
+    .custom-banner button { width:auto; flex:0 0 auto; padding:10px 14px; }
+    .custom-art-panel { margin:18px 0 28px; }
+    .custom-art-panel .box { padding:22px; }
+    .custom-art-panel h3 { margin-bottom:14px; }
+    .custom-art-panel p { color:var(--secondary-text); font-size:14px; line-height:1.7; }
+    .custom-steps { padding-left:22px; color:var(--secondary-text); font-size:14px; line-height:1.8; }
+    .custom-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 12px; }
+    .custom-form-grid .full-width { grid-column:1 / -1; }
+    .custom-actions { display:flex; gap:10px; margin-top:8px; }
+    .custom-actions button { flex:1; }
+    .custom-contact-button { background:#fff; color:var(--accent-color); border:1px solid var(--accent-color); }
+    .custom-contact-button:hover { background:#F3F6F0; }
+    .custom-form-message { display:none; font-size:14px; font-weight:700; text-align:center; margin:12px 0 0; }
+    @media(max-width:520px) {
+      .custom-banner { display:block; text-align:center; }
+      .custom-banner button { width:100%; margin-top:12px; }
+      .custom-form-grid { grid-template-columns:1fr; }
+      .custom-form-grid .full-width { grid-column:auto; }
+      .custom-actions { flex-direction:column; }
+    }
+
 
     /* Mobile: products stay in a two-column grid; reviews remain swipeable */
     @media (max-width: 768px) {
@@ -228,6 +252,47 @@
 
 <h3 class="category-heading">Explore Our Artworks</h3>
 <div id="categoryFilters" class="category-filters" aria-label="Filter artworks by art form"></div>
+<div class="custom-banner">
+  <div><strong>Can't find what you're looking for?</strong><p>We create customised artwork too! Tell us what you have in mind and we'll make it special.</p></div>
+  <button type="button" onclick="openCustomArtwork()">Request Custom Art</button>
+</div>
+<section id="customArtPanel" class="custom-art-panel" style="display:none;" aria-labelledby="customArtHeading">
+  <div class="box">
+    <h3 id="customArtHeading">Customised Art, Made Just for You ❤️</h3>
+    <p>Celebrate your special moments with beautiful handmade artwork, customised exclusively to match your ideas, preferences and occasions.</p>
+    <p>Whether it's a birthday, anniversary, wedding, housewarming or a thoughtful gift, we'll turn your ideas into something truly special.</p>
+    <h4 style="margin-top:22px;">Want to explore our custom artwork styles?</h4>
+    <p>Since every artwork is unique and many creations are made exclusively for our customers, we share sample designs privately.</p>
+    <h4 style="margin-top:22px;">How to get started</h4>
+    <ol class="custom-steps">
+      <li>Fill out our custom artwork enquiry form.</li><li>Tell us about your occasion and preferences.</li>
+      <li>Contact us on WhatsApp to explore sample designs.</li><li>Get your personalised artwork made just for you.</li>
+    </ol>
+    <h4 style="margin-top:24px;">Request Your Custom Artwork</h4>
+    <form id="customArtworkForm">
+      <div class="custom-form-grid">
+        <input type="text" id="custom-name" class="form-input" placeholder="Your Name" autocomplete="name" required>
+        <input type="tel" id="custom-phone" class="form-input" placeholder="Your WhatsApp Number" autocomplete="tel" inputmode="tel" required>
+        <select id="custom-occasion" class="form-input" required>
+          <option value="" disabled selected>Select an occasion</option>
+          <option>Birthday</option><option>Anniversary</option><option>Wedding</option><option>Housewarming</option><option>Festival</option><option>Gift</option><option>Home decor</option><option>Other</option>
+        </select>
+        <select id="custom-artwork-type" class="form-input" required>
+          <option value="" disabled selected>Preferred artwork style</option>
+          <option>Pattachitra</option><option>Warli Art</option><option>Lippan Art</option><option>Mural Art</option><option>Kalamkari Art</option><option>Pichwai Art</option><option>Gond Painting</option><option>Madhubani Painting</option><option>Bottle Art</option><option>Pipe Cleaner Art</option><option>Canvas Painting</option><option>Not sure — show me options</option><option>Other</option>
+        </select>
+        <select id="custom-size" class="form-input"><option value="">Preferred size (optional)</option><option>Small</option><option>Medium</option><option>Large</option><option>Custom size</option><option>Need guidance</option></select>
+        <select id="custom-budget" class="form-input"><option value="">Approximate budget (optional)</option><option>Below ₹1,000</option><option>₹1,000–₹2,500</option><option>₹2,500–₹5,000</option><option>₹5,000–₹10,000</option><option>Above ₹10,000</option><option>Need a quote</option></select>
+        <textarea id="custom-description" class="form-input full-width" rows="4" placeholder="Describe your idea, preferred colours, names, dates or other details (optional)"></textarea>
+      </div>
+      <div class="custom-actions">
+        <button type="submit" id="custom-submit">Submit Enquiry & Continue to WhatsApp</button>
+        <button type="button" id="custom-contact" class="custom-contact-button">Contact Us on WhatsApp</button>
+      </div>
+      <p id="custom-form-message" class="custom-form-message" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
 <div id="products" class="carousel-container products-grid"></div>
 <div id="status" class="loading">Gathering our beautiful products for you...</div>
 
@@ -338,7 +403,9 @@ const ART_CATEGORIES = [
   "Pichwai Art",
   "Gond Painting",
   "Madhubani Painting",
-  "Bottle Art"
+  "Bottle Art",
+  "Pipe Cleaner Art",
+  "Canvas Painting"
 ];
 
 const productsContainer = document.getElementById("products");
@@ -361,7 +428,7 @@ function makeElement(tag, className, text) {
 
 function renderCategoryFilters() {
   filtersContainer.replaceChildren();
-  ["Featured", ...ART_CATEGORIES].forEach(category => {
+  ["Featured", "Customised Art", ...ART_CATEGORIES].forEach(category => {
     const button = makeElement("button", "category-filter", category);
     button.type = "button";
     button.classList.toggle("active", selectedCategory === category);
@@ -370,6 +437,7 @@ function renderCategoryFilters() {
       selectedCategory = category;
       renderCategoryFilters();
       renderProducts();
+      if (category === "Customised Art") document.getElementById("customArtPanel").scrollIntoView({ behavior: "smooth", block: "start" });
     });
     filtersContainer.appendChild(button);
   });
@@ -398,6 +466,16 @@ function getWhatsAppNumber(value) {
 }
 
 function renderProducts() {
+  const customPanel = document.getElementById("customArtPanel");
+  const statusElement = document.getElementById("status");
+  if (selectedCategory === "Customised Art") {
+    productsContainer.style.display = "none";
+    statusElement.style.display = "none";
+    customPanel.style.display = "block";
+    return;
+  }
+  productsContainer.style.display = "";
+  customPanel.style.display = "none";
   productsContainer.replaceChildren();
   const visibleProducts = selectedCategory === "Featured"
     ? allProducts
@@ -574,6 +652,111 @@ document.getElementById("waitlistForm").addEventListener("submit", function(even
     submitButton.style.opacity = "1";
   });
 });
+
+
+// Custom artwork enquiry and WhatsApp flow
+function openCustomArtwork() {
+  selectedCategory = "Customised Art";
+  renderCategoryFilters();
+  renderProducts();
+  document.getElementById("customArtPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function getStoreWhatsAppNumber() {
+  const p = allProducts.find(item => getWhatsAppNumber(item.whatsapp));
+  return p ? getWhatsAppNumber(p.whatsapp) : "";
+}
+
+function openCustomWhatsApp(message) {
+  const number = getStoreWhatsAppNumber();
+  const msg = document.getElementById("custom-form-message");
+  if (!number) {
+    msg.textContent = "WhatsApp contact is not configured yet. Please contact the store.";
+    msg.style.color = "red";
+    msg.style.display = "block";
+    return;
+  }
+  window.open("https://wa.me/" + number + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
+}
+
+document.getElementById("custom-contact").addEventListener("click", function() {
+  openCustomWhatsApp("Hi Swati! I'd like to know more about your customised artwork options.");
+});
+
+document.getElementById("customArtworkForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const form = this;
+  const submit = document.getElementById("custom-submit");
+  const msg = document.getElementById("custom-form-message");
+  const number = getStoreWhatsAppNumber();
+
+  if (!number) {
+    msg.textContent = "WhatsApp contact is not configured yet. Please contact the store.";
+    msg.style.color = "red";
+    msg.style.display = "block";
+    return;
+  }
+
+  const enquiry = {
+    name: document.getElementById("custom-name").value.trim(),
+    phone: document.getElementById("custom-phone").value.trim(),
+    occasion: document.getElementById("custom-occasion").value,
+    artworkType: document.getElementById("custom-artwork-type").value,
+    size: document.getElementById("custom-size").value,
+    budget: document.getElementById("custom-budget").value,
+    description: document.getElementById("custom-description").value.trim()
+  };
+  const payload = {
+    type: "custom_enquiry",
+    ...enquiry,
+    source: new URLSearchParams(window.location.search).get("utm_source") || "Website"
+  };
+  const whatsappText =
+    "Hi Swati! I'd like to enquire about customised artwork.\n\n" +
+    "Name: " + enquiry.name + "\nWhatsApp: " + enquiry.phone +
+    "\nOccasion: " + enquiry.occasion + "\nArtwork style: " + enquiry.artworkType +
+    "\nPreferred size: " + (enquiry.size || "Not specified") +
+    "\nBudget: " + (enquiry.budget || "Not specified") +
+    "\nDetails: " + (enquiry.description || "Not specified");
+
+  // Reserve a tab during the click so the browser does not block WhatsApp after the save.
+  const waWindow = window.open("about:blank", "_blank");
+  submit.disabled = true;
+  submit.textContent = "Submitting your enquiry...";
+  msg.style.display = "none";
+
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "text/plain;charset=utf-8" }
+  })
+  .then(response => response.text())
+  .then(result => {
+    if (result.trim().toLowerCase() !== "success") throw new Error("Enquiry save failed");
+    msg.textContent = "Thank you! Your enquiry has been saved. WhatsApp is opening so you can send the details to Swati.";
+    msg.style.color = "green";
+    msg.style.display = "block";
+    if (typeof gtag === "function") gtag("event", "custom_enquiry_submit", {
+      artwork_type: enquiry.artworkType, occasion: enquiry.occasion, transport_type: "beacon"
+    });
+    const url = "https://wa.me/" + number + "?text=" + encodeURIComponent(whatsappText);
+    if (waWindow && !waWindow.closed) waWindow.location.href = url;
+    else window.open(url, "_blank", "noopener,noreferrer");
+    form.reset();
+    submit.disabled = false;
+    submit.textContent = "Submit Enquiry & Continue to WhatsApp";
+  })
+  .catch(error => {
+    console.error("Custom artwork enquiry error:", error);
+    if (waWindow && !waWindow.closed) waWindow.close();
+    msg.textContent = "Sorry, we couldn't save your enquiry. Please try again or contact us on WhatsApp.";
+    msg.style.color = "red";
+    msg.style.display = "block";
+    submit.disabled = false;
+    submit.textContent = "Submit Enquiry & Continue to WhatsApp";
+  });
+});
+
 </script>
 
 </body>
