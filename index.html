@@ -193,6 +193,15 @@
     .custom-banner button { width:auto; flex:0 0 auto; padding:10px 14px; }
     .custom-art-panel { margin:18px 0 28px; }
     .custom-art-panel .box { padding:22px; }
+    .custom-artwork-hero {
+      display:block;
+      width:100%;
+      aspect-ratio:3.37 / 1;
+      object-fit:cover;
+      border-radius:12px;
+      margin:0 0 22px;
+      background:#F4F0E8;
+    }
     .custom-art-panel h3 { margin-bottom:14px; }
     .custom-art-panel p { color:var(--secondary-text); font-size:14px; line-height:1.7; }
     .custom-steps { padding-left:22px; color:var(--secondary-text); font-size:14px; line-height:1.8; }
@@ -252,12 +261,19 @@
 
 <h3 class="category-heading">Explore Our Artworks</h3>
 <div id="categoryFilters" class="category-filters" aria-label="Filter artworks by art form"></div>
-<div class="custom-banner">
+<div id="customArtworkBanner" class="custom-banner">
   <div><strong>Can't find what you're looking for?</strong><p>We create customised artwork too! Tell us what you have in mind and we'll make it special.</p></div>
   <button type="button" onclick="openCustomArtwork()">Request Custom Art</button>
 </div>
 <section id="customArtPanel" class="custom-art-panel" style="display:none;" aria-labelledby="customArtHeading">
   <div class="box">
+    <img
+      src="custom-artwork-banner.jpg"
+      alt="Handmade Indian customised artworks including mirror art, canvas painting and decorative crafts"
+      class="custom-artwork-hero"
+      loading="lazy"
+      decoding="async"
+    />
     <h3 id="customArtHeading">Customised Art, Made Just for You ❤️</h3>
     <p>Celebrate your special moments with beautiful handmade artwork, customised exclusively to match your ideas, preferences and occasions.</p>
     <p>Whether it's a birthday, anniversary, wedding, housewarming or a thoughtful gift, we'll turn your ideas into something truly special.</p>
@@ -468,13 +484,18 @@ function getWhatsAppNumber(value) {
 function renderProducts() {
   const customPanel = document.getElementById("customArtPanel");
   const statusElement = document.getElementById("status");
+  const customBanner = document.getElementById("customArtworkBanner");
+
   if (selectedCategory === "Customised Art") {
     productsContainer.style.display = "none";
     statusElement.style.display = "none";
+    customBanner.style.display = "none";
     customPanel.style.display = "block";
     return;
   }
+
   productsContainer.style.display = "";
+  customBanner.style.display = "";
   customPanel.style.display = "none";
   productsContainer.replaceChildren();
   const visibleProducts = selectedCategory === "Featured"
