@@ -469,7 +469,16 @@ function renderProducts() {
           "Hi, I want to order:\n" + (product.name || "Handmade artwork") +
           "\nCategory: " + category + "\nPrice: ₹" + product.price
         );
-        window.open("https://wa.me/" + whatsappNumber + "?text=" + message, "_blank", "noopener,noreferrer");
+        
+gtag('event', 'whatsapp_click', {
+  product_name: product.name || 'Unknown Product',
+  product_category: category,
+  product_id: String(product.id || ''),
+  transport_type: 'beacon'
+});
+
+window.open("https://wa.me/" + whatsappNumber + "?text=" + message, "_blank", "noopener,noreferrer");
+
       });
     } else {
       orderButton.disabled = true;
