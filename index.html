@@ -187,10 +187,14 @@
     .card .see-more { user-select: none; }
     .card .see-more[aria-expanded="true"] { margin-bottom: 12px; }
     .order-unavailable { opacity: .55; cursor: not-allowed; }
-    .custom-banner { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:18px 0 22px; padding:18px; border-radius:12px; background:#F3F6F0; border:1px solid #D9E3D3; }
-    .custom-banner p { margin:5px 0 0; color:var(--secondary-text); font-size:14px; line-height:1.5; }
-    .custom-banner strong { font-family:'Lora',serif; font-size:18px; }
-    .custom-banner button { width:auto; flex:0 0 auto; padding:10px 14px; }
+    .custom-banner {
+      grid-column: 1 / -1; display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin:8px 0 10px; padding:12px 15px; border-radius:10px;
+      background:#F7F8F5; border:1px solid #E6EAE2; box-shadow:none;
+    }
+    .custom-banner p { margin:3px 0 0; color:var(--secondary-text); font-size:13px; line-height:1.45; }
+    .custom-banner strong { font-family:'Lora',serif; font-size:16px; font-weight:600; }
+    .custom-banner button { width:auto; flex:0 0 auto; padding:9px 12px; font-size:13px; }
     .custom-art-panel { margin:18px 0 28px; }
     .custom-art-panel .box { padding:22px; }
     .custom-artwork-hero {
@@ -211,6 +215,20 @@
     .custom-actions button { flex:1; }
     .custom-contact-button { background:#fff; color:var(--accent-color); border:1px solid var(--accent-color); }
     .custom-contact-button:hover { background:#F3F6F0; }
+    .faq-item { padding:0; overflow:hidden; }
+    .faq-item summary {
+      list-style:none; cursor:pointer; padding:16px 18px; font-weight:700;
+      font-family:'Lora',serif; color:var(--primary-text); position:relative;
+      padding-right:42px;
+    }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item summary::after {
+      content:"+"; position:absolute; right:18px; top:50%; transform:translateY(-50%);
+      color:var(--accent-color); font-family:Arial,sans-serif; font-size:22px; font-weight:400;
+    }
+    .faq-item[open] summary::after { content:"−"; }
+    .faq-answer { padding:0 18px 16px; }
+    .faq-answer p { margin:0; font-size:14px; color:var(--secondary-text); line-height:1.6; }
     .custom-form-message { display:none; font-size:14px; font-weight:700; text-align:center; margin:12px 0 0; }
     @media(max-width:520px) {
       .custom-banner { display:block; text-align:center; }
@@ -283,62 +301,7 @@
 
 <h3 class="category-heading">Explore Our Artworks</h3>
 <div id="categoryFilters" class="category-filters" aria-label="Filter artworks by art form"></div>
-<div id="customArtworkBanner" class="custom-banner">
-  <div><strong>Can't find what you're looking for?</strong><p>We create customised artwork too! Tell us what you have in mind and we'll make it special.</p></div>
-  <button type="button" onclick="openCustomArtwork()">Request Custom Art</button>
-</div>
-<section id="customArtPanel" class="custom-art-panel" style="display:none;" aria-labelledby="customArtHeading">
-  <div class="box">
-    <img
-      src="custom-artwork-banner.jpg"
-      alt="Handmade Indian customised artworks including mirror art, canvas painting and decorative crafts"
-      class="custom-artwork-hero"
-      loading="lazy"
-      decoding="async"
-    />
-    <h3 id="customArtHeading">Customised Art, Made Just for You ❤️</h3>
-    <p>Celebrate your special moments with beautiful handmade artwork, customised exclusively to match your ideas, preferences and occasions.</p>
-    <p>Whether it's a birthday, anniversary, wedding, housewarming or a thoughtful gift, we'll turn your ideas into something truly special.</p>
-    <h4 style="margin-top:22px;">Want to explore our custom artwork styles?</h4>
-    <p>Since every artwork is unique and many creations are made exclusively for our customers, we share sample designs privately.</p>
-    <h4 style="margin-top:22px;">How to get started</h4>
-    <ol class="custom-steps">
-      <li>Fill out our custom artwork enquiry form.</li><li>Tell us about your occasion and preferences.</li>
-      <li>Contact us on WhatsApp to explore sample designs.</li><li>Get your personalised artwork made just for you.</li>
-    </ol>
-    <h4 style="margin-top:24px;">Request Your Custom Artwork</h4>
-    <form id="customArtworkForm">
-      <div class="custom-form-grid">
-        <input type="text" id="custom-name" class="form-input" placeholder="Your Name" autocomplete="name" required>
-        <input type="tel" id="custom-phone" class="form-input" placeholder="Your WhatsApp Number" autocomplete="tel" inputmode="tel" required>
-        <select id="custom-occasion" class="form-input" required>
-          <option value="" disabled selected>Select an occasion</option>
-          <option>Birthday</option><option>Anniversary</option><option>Wedding</option><option>Housewarming</option><option>Festival</option><option>Gift</option><option>Home decor</option><option>Other</option>
-        </select>
-        <select id="custom-artwork-type" class="form-input" required>
-          <option value="" disabled selected>Preferred artwork style</option>
-          <option>Pattachitra</option><option>Warli Art</option><option>Lippan Art</option><option>Mural Art</option><option>Kalamkari Art</option><option>Pichwai Art</option><option>Gond Painting</option><option>Madhubani Painting</option><option>Bottle Art</option><option>Pipe Cleaner Art</option><option>Canvas Painting</option><option>Not sure — show me options</option><option>Other</option>
-        </select>
-        <select id="custom-size" class="form-input"><option value="">Preferred size (optional)</option><option>Small</option><option>Medium</option><option>Large</option><option>Custom size</option><option>Need guidance</option></select>
-        <select id="custom-budget" class="form-input"><option value="">Approximate budget (optional)</option><option>Below ₹1,000</option><option>₹1,000–₹2,500</option><option>₹2,500–₹5,000</option><option>₹5,000–₹10,000</option><option>Above ₹10,000</option><option>Need a quote</option></select>
-        <textarea id="custom-description" class="form-input full-width" rows="4" placeholder="Describe your idea, preferred colours, names, dates or other details (optional)"></textarea>
-      </div>
-      <div class="custom-actions">
-        <button type="submit" id="custom-submit">Submit Enquiry & Continue to WhatsApp</button>
-        <button type="button" id="custom-contact" class="custom-contact-button">Contact Us on WhatsApp</button>
-      </div>
-      <p id="custom-form-message" class="custom-form-message" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
-<div id="products" class="carousel-container products-grid"></div>
-<div id="status" class="loading">Gathering our beautiful products for you...</div>
 
-<div class="section" style="margin-top: 20px;">
-  <h3>Happy Customers</h3>
-  <div class="swipe-hint">👉 Swipe to read</div>
-  <div id="reviews" class="carousel-container"></div>
-</div>
 
 <div class="section">
   <h3>🎨 Learn to Create & Sell!</h3>
@@ -376,51 +339,42 @@
 
 <div class="section">
   <h3>Frequently Asked Questions</h3>
-  
-  <div class="box">
-    <b>1. Are all artworks handmade?</b>
-    <p><i>Yes, 100% handmade 🤍</i><br>Every piece is handcrafted with Lippan art, clay, and mirrors. No machine prints. Each artwork is one-of-a-kind.</p>
-  </div>
-
-  <div class="box">
-    <b>2. Can I customize size, color, or name?</b>
-    <p><i>Absolutely! I love custom orders ✨</i><br>Choose size from 10" to 24", color theme, name, date, or quote. Add details in "Custom Note" while ordering. Price depends on size & design.</p>
-  </div>
-
-  <div class="box">
-    <b>3. How long for making & delivery?</b>
-    <p><i>Making: 7-10 working days + Delivery: 3-5 days 📦</i><br>All pieces are made fresh on order. Need it faster? Ask for "Express Making" with extra charges.</p>
-  </div>
-
-  <div class="box">
-    <b>4. What materials do you use? Is it durable?</b>
-    <p><i>Premium MDF, clay, real mirrors, acrylic colors + varnish.</i><br>With care, artworks last 10+ years. Avoid direct sunlight & water. Varnish protects from dust.</p>
-  </div>
-
-  <div class="box">
-    <b>5. What if my artwork is damaged?</b>
-    <p><i>100% Safe Packing Guarantee 📦</i><br>Packed with bubble wrap, thermocol & hard box. If damaged, send an <i>unboxing video</i> within 48 hours. Free replacement/refund, no questions.</p>
-  </div>
-
-  <div class="box">
-    <b>6. Do you ship across India? Shipping charges?</b>
-    <p><i>Yes, Free Pan-India shipping! 🇮🇳</i><br>We offer 100% free delivery anywhere in India! (For international orders outside India, standard shipping charges will apply based on location).</p>
-  </div>
-
-  <div class="box">
-    <b>7. How do I clean the artwork?</b>
-    <p><i>Super easy ✨</i><br>Just dust with a dry soft cloth or brush. No water or chemicals. Varnish keeps colors safe.</p>
-  </div>
-
-  <div class="box">
-    <b>8. Do you take bulk orders?</b>
-    <p><i>Yes! For weddings, housewarming, gifts 🎁</i></p>
-  </div>
-
-  <div class="box">
-    <b>9. Still have questions?</b>
-    <p><i>Just DM me 💛</i></p>
-  </div>
+  <details class="box faq-item">
+    <summary>1. Are all artworks handmade?</summary>
+    <div class="faq-answer"><p><i>Yes, 100% handmade 🤍</i><br>Every piece is handcrafted with Lippan art, clay, and mirrors. No machine prints. Each artwork is one-of-a-kind.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>2. Can I customize size, color, or name?</summary>
+    <div class="faq-answer"><p><i>Absolutely! I love custom orders ✨</i><br>Choose size from 10" to 24", color theme, name, date, or quote. Add details in "Custom Note" while ordering. Price depends on size & design.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>3. How long for making & delivery?</summary>
+    <div class="faq-answer"><p><i>Making: 7-10 working days + Delivery: 3-5 days 📦</i><br>All pieces are made fresh on order. Need it faster? Ask for "Express Making" with extra charges.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>4. What materials do you use? Is it durable?</summary>
+    <div class="faq-answer"><p><i>Premium MDF, clay, real mirrors, acrylic colors + varnish.</i><br>With care, artworks last 10+ years. Avoid direct sunlight & water. Varnish protects from dust.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>5. What if my artwork is damaged?</summary>
+    <div class="faq-answer"><p><i>100% Safe Packing Guarantee 📦</i><br>Packed with bubble wrap, thermocol & hard box. If damaged, send an <i>unboxing video</i> within 48 hours. Free replacement/refund, no questions.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>6. Do you ship across India? Shipping charges?</summary>
+    <div class="faq-answer"><p><i>Yes, Free Pan-India shipping! 🇮🇳</i><br>We offer 100% free delivery anywhere in India! (For international orders outside India, standard shipping charges will apply based on location).</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>7. How do I clean the artwork?</summary>
+    <div class="faq-answer"><p><i>Super easy ✨</i><br>Just dust with a dry soft cloth or brush. No water or chemicals. Varnish keeps colors safe.</p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>8. Do you take bulk orders?</summary>
+    <div class="faq-answer"><p><i>Yes! For weddings, housewarming, gifts 🎁</i></p></div>
+  </details>
+  <details class="box faq-item">
+    <summary>9. Still have questions?</summary>
+    <div class="faq-answer"><p><i>Just DM me 💛</i></p></div>
+  </details>
 </div>
 
 <div class="section" style="text-align:center; padding-bottom: 40px;">
@@ -542,20 +496,22 @@ function getWhatsAppNumber(value) {
 function renderProducts() {
   const customPanel = document.getElementById("customArtPanel");
   const statusElement = document.getElementById("status");
-  const customBanner = document.getElementById("customArtworkBanner");
 
   if (selectedCategory === "Customised Art") {
     productsContainer.style.display = "none";
     statusElement.style.display = "none";
-    customBanner.style.display = "none";
     customPanel.style.display = "block";
     return;
   }
 
   productsContainer.style.display = "";
-  customBanner.style.display = "";
   customPanel.style.display = "none";
   productsContainer.replaceChildren();
+  const customBanner = document.createElement("div");
+  customBanner.id = "customArtworkBanner";
+  customBanner.className = "custom-banner";
+  customBanner.innerHTML = `<div id="customArtworkBanner" class="custom-banner">   <div><strong>Can't find what you're looking for?</strong><p>We create customised artwork too! Tell us what you have in mind and we'll make it special.</p></div>   <button type="button" onclick="openCustomArtwork()">Request Custom Art</button> </div> <section id="customArtPanel" class="custom-art-panel" style="display:none;" aria-labelledby="customArtHeading">   <div class="box">     <img       src="custom-artwork-banner.jpg"       alt="Handmade Indian customised artworks including mirror art, canvas painting and decorative crafts"       class="custom-artwork-hero"       loading="lazy"       decoding="async"     />     <h3 id="customArtHeading">Customised Art, Made Just for You ❤️</h3>     <p>Celebrate your special moments with beautiful handmade artwork, customised exclusively to match your ideas, preferences and occasions.</p>     <p>Whether it's a birthday, anniversary, wedding, housewarming or a thoughtful gift, we'll turn your ideas into something truly special.</p>     <h4 style="margin-top:22px;">Want to explore our custom artwork styles?</h4>     <p>Since every artwork is unique and many creations are made exclusively for our customers, we share sample designs privately.</p>     <h4 style="margin-top:22px;">How to get started</h4>     <ol class="custom-steps">       <li>Fill out our custom artwork enquiry form.</li><li>Tell us about your occasion and preferences.</li>       <li>Contact us on WhatsApp to explore sample designs.</li><li>Get your personalised artwork made just for you.</li>     </ol>     <h4 style="margin-top:24px;">Request Your Custom Artwork</h4>     <form id="customArtworkForm">       <div class="custom-form-grid">         <input type="text" id="custom-name" class="form-input" placeholder="Your Name" autocomplete="name" required>         <input type="tel" id="custom-phone" class="form-input" placeholder="Your WhatsApp Number" autocomplete="tel" inputmode="tel" required>         <select id="custom-occasion" class="form-input" required>           <option value="" disabled selected>Select an occasion</option>           <option>Birthday</option><option>Anniversary</option><option>Wedding</option><option>Housewarming</option><option>Festival</option><option>Gift</option><option>Home decor</option><option>Other</option>         </select>         <select id="custom-artwork-type" class="form-input" required>           <option value="" disabled selected>Preferred artwork style</option>           <option>Pattachitra</option><option>Warli Art</option><option>Lippan Art</option><option>Mural Art</option><option>Kalamkari Art</option><option>Pichwai Art</option><option>Gond Painting</option><option>Madhubani Painting</option><option>Bottle Art</option><option>Pipe Cleaner Art</option><option>Canvas Painting</option><option>Not sure — show me options</option><option>Other</option>         </select>         <select id="custom-size" class="form-input"><option value="">Preferred size (optional)</option><option>Small</option><option>Medium</option><option>Large</option><option>Custom size</option><option>Need guidance</option></select>         <select id="custom-budget" class="form-input"><option value="">Approximate budget (optional)</option><option>Below ₹1,000</option><option>₹1,000–₹2,500</option><option>₹2,500–₹5,000</option><option>₹5,000–₹10,000</option><option>Above ₹10,000</option><option>Need a quote</option></select>         <textarea id="custom-description" class="form-input full-width" rows="4" placeholder="Describe your idea, preferred colours, names, dates or other details (optional)"></textarea>       </div>       <div class="custom-actions">         <button type="submit" id="custom-submit">Submit Enquiry & Continue to WhatsApp</button>         <button type="button" id="custom-contact" class="custom-contact-button">Contact Us on WhatsApp</button>       </div>       <p id="custom-form-message" class="custom-form-message" role="status" aria-live="polite"></p>     </form>   </div> </section> <div id="products" class="carousel-container products-grid"></div> <div id="status" class="loading">Gathering our beautiful products for you...</div>  <div class="section" style="margin-top: 20px;">   <h3>Happy Customers</h3>   <div class="swipe-hint">👉 Swipe to read</div>   <div id="reviews" class="carousel-container"></div> </div>`;
+
   const visibleProducts = selectedCategory === "Featured"
     ? allProducts
     : allProducts.filter(product => normaliseCategory(product.category) === normaliseCategory(selectedCategory));
@@ -565,7 +521,7 @@ function renderProducts() {
     return;
   }
 
-  visibleProducts.forEach(product => {
+  visibleProducts.forEach((product, index) => {
     const card = makeElement("article", "card");
     const category = String(product.category || "Other Art").trim();
     const image = makeElement("img");
@@ -647,7 +603,17 @@ window.open("https://wa.me/" + whatsappNumber + "?text=" + message, "_blank", "n
 
     card.appendChild(makeElement("div", "trust", "✔ 100% Handmade\n✔ Free Pan-India Delivery\n✔ WhatsApp ordering"));
     productsContainer.appendChild(card);
+
+    // Show the subtle custom-art banner after the first 8 products.
+    // If this category has fewer than 8 products, show it after the final card.
+    if (index === 7) {
+      productsContainer.appendChild(customBanner);
+    }
   });
+
+  if (visibleProducts.length < 8) {
+    productsContainer.appendChild(customBanner);
+  }
 }
 
 function renderReviews(reviews) {
